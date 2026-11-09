@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Huruf Hijaiyah · SIPENA Muhammadiyah</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e8f4ff;--card:#ffffff;--ink:#1d3557;--mute:#5d7391;--pri:#2b8be0;--pri2:#1c6bb5;--ok:#2fa84f;--okbg:#dff5e5;--bad:#d9534f;--badbg:#fde6e5;--gold:#f5b301;--line:#cfe2f5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b2d;--card:#18283f;--ink:#eaf2ff;--mute:#9db3d1;--pri:#4aa3f2;--pri2:#2f86d6;--ok:#4cc46d;--okbg:#17372a;--bad:#ef7773;--badbg:#44211f;--gold:#ffc933;--line:#2a4262}}
+:root[data-theme="dark"]{--bg:#0f1b2d;--card:#18283f;--ink:#eaf2ff;--mute:#9db3d1;--pri:#4aa3f2;--pri2:#2f86d6;--ok:#4cc46d;--okbg:#17372a;--bad:#ef7773;--badbg:#44211f;--gold:#ffc933;--line:#2a4262}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;font-size:17px;min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:30px;margin:6px 0 2px;text-align:center}
+.sub{text-align:center;color:var(--mute);margin:0 0 14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
+.stat{display:flex;justify-content:space-around;text-align:center}
+.stat b{display:block;font-size:24px;color:var(--pri)}
+.stat span{font-size:13px;color:var(--mute)}
+.lv{display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:14px;margin-bottom:10px;font:inherit;cursor:pointer}
+.lv:disabled{opacity:.55;cursor:not-allowed}
+.lv .n{flex:none;width:48px;height:48px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-size:24px;font-weight:700}
+.lv small{display:block;color:var(--mute);font-size:14px;line-height:1.25}
+.lv .st{margin-left:auto;font-size:20px;white-space:nowrap}
+.btn{font:inherit;font-weight:700;border:0;border-radius:16px;padding:12px 20px;background:var(--pri);color:#fff;cursor:pointer;font-size:18px}
+.btn:hover{background:var(--pri2)}
+.btn.ghost{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.map{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.map div{aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-family:'Noto Naskh Arabic',serif;font-size:24px;background:var(--bg);border:2px solid var(--line)}
+.map .m1{background:#fff3c4;border-color:var(--gold);color:#5a4400}
+.map .m2{background:var(--okbg);border-color:var(--ok);color:var(--ink)}
+.legend{font-size:13px;color:var(--mute);margin-top:8px;text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-weight:700}
+.bar{height:14px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--ok));transition:width .3s}
+.prompt{text-align:center}
+.prompt .big{font-size:22px;margin:4px 0 10px}
+.say{width:84px;height:84px;border-radius:50%;font-size:38px;background:var(--gold);color:#3a2b00;border:0;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+.say:active{transform:translateY(2px)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.opt{font-family:'Noto Naskh Arabic','Amiri',serif;font-size:64px;line-height:1.5;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:22px;padding:6px;cursor:pointer;min-height:110px}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad);animation:sh .3s}
+.opt:disabled{cursor:default}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{min-height:34px;text-align:center;font-weight:700;margin-top:10px;font-size:19px}
+.warn{background:#fff3c4;color:#5a4400;border-radius:12px;padding:8px 12px;font-size:14px;margin-bottom:10px}
+.stars{font-size:48px;letter-spacing:6px;text-align:center}
+.audio-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.audio-controls button{font:inherit;font-size:14px;font-weight:700;border:2px solid var(--line);border-radius:99px;padding:6px 12px;background:var(--card);color:var(--ink);cursor:pointer}
+.audio-controls button[aria-pressed="true"]{border-color:var(--pri)}
+.hide{display:none}
+.center{text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="audio-controls" aria-label="Pengaturan audio">
+  <button id="sound-toggle" type="button" aria-label="Efek suara dan suara huruf" aria-pressed="true">🔊 Suara: Aktif</button>
+  <button id="music-toggle" type="button" aria-label="Musik latar" aria-pressed="true">🎵 Musik: Aktif</button>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <h1>🌙 Petualangan Huruf Hijaiyah</h1>
+  <p class="sub">Ayo cari huruf yang disebutkan!</p>
+  <div class="card stat">
+    <div><b id="sTotal">0</b><span>Total Poin</span></div>
+    <div><b id="sStars">0</b><span>Bintang</span></div>
+    <div><b id="sMaster">0/28</b><span>Huruf Hafal</span></div>
+  </div>
+  <div id="levels"></div>
+  <div class="card">
+    <b>🗺️ Peta Belajar</b>
+    <div class="map" id="map" style="margin-top:10px" dir="rtl"></div>
+    <div class="legend">Abu-abu: belum dicoba · Kuning: sedang belajar · Hijau: hafal</div>
+  </div>
+  <div class="row">
+    <button class="btn ghost" id="reset">Ulangi dari awal</button>
+    <a class="btn ghost" href="/games%20sore.html" style="text-decoration:none">Kembali ke menu Games</a>
+  </div>
+</section>
+
+<!-- GAME -->
+<section id="game" class="hide">
+  <div class="top"><span id="gLevel"></span><span id="gScore">⭐ 0</span></div>
+  <div class="bar"><i id="gBar"></i></div>
+  <div id="gWarn" class="warn hide">Suara bahasa Arab belum tersedia di perangkat ini, jadi nama huruf ditampilkan sebagai bantuan.</div>
+  <div class="card prompt">
+    <div class="big" id="gPrompt"></div>
+    <button class="say" id="say" aria-label="Putar suara">🔊</button>
+    <div id="gHint" style="color:var(--mute);font-size:14px;margin-top:6px"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+  </div>
+  <div class="row"><button class="btn ghost" id="quit">Kembali ke menu</button></div>
+</section>
+
+<!-- RESULT -->
+<section id="result" class="hide">
+  <h1 id="rTitle"></h1>
+  <div class="card">
+    <div class="stars" id="rStars"></div>
+    <div class="stat" style="margin-top:12px">
+      <div><b id="rScore">0</b><span>Poin</span></div>
+      <div><b id="rCorrect">0/10</b><span>Benar</span></div>
+    </div>
+    <p class="center" id="rMsg"></p>
+  </div>
+  <div class="row"><button class="btn" id="again">Main lagi</button><button class="btn ghost" id="toMenu">Menu</button></div>
+</section>
+
+</div>
+<script src="/games/shared/audio.js"></script>
+<script>
+const LET=[
+['ا','Alif','أَلِف'],['ب','Ba','بَاء'],['ت','Ta','تَاء'],['ث','Tsa','ثَاء'],['ج','Jim','جِيم'],['ح','Ḥa','حَاء'],['خ','Kha','خَاء'],
+['د','Dal','دَال'],['ذ','Dzal','ذَال'],['ر','Ra','رَاء'],['ز','Zai','زَاي'],['س','Sin','سِين'],['ش','Syin','شِين'],['ص','Shad','صَاد'],
+['ض','Dhad','ضَاد'],['ط','Tha','طَاء'],['ظ','Zha','ظَاء'],['ع','’Ain','عَيْن'],['غ','Ghain','غَيْن'],['ف','Fa','فَاء'],['ق','Qaf','قَاف'],
+['ك','Kaf','كَاف'],['ل','Lam','لَام'],['م','Mim','مِيم'],['ن','Nun','نُون'],['و','Waw','وَاو'],['ه','Ha','هَاء'],['ي','Ya','يَاء']
+].map(a=>({c:a[0],n:a[1],s:a[2]}));
+const BY={};LET.forEach(l=>BY[l.c]=l);
+const GROUPS=[['ب','ت','ث','ن'],['ج','ح','خ'],['د','ذ','ر','ز'],['س','ش','ص','ض'],['ط','ظ','ع','غ'],['ف','ق','ك']];
+const LV=[
+ {t:'Level 1 · Kenali Bentuk Huruf',d:'Lihat nama huruf, lalu pilih bentuknya.'},
+ {t:'Level 2 · Cocokkan dengan Suara',d:'Dengarkan suaranya, lalu pilih hurufnya.'},
+ {t:'Level 3 · Huruf yang Mirip',d:'Bedakan ba, ta, tsa dan huruf mirip lainnya.'}
+];
+const $=id=>document.getElementById(id);
+const gameAudio=window.TPQGameAudio.create({
+  storageKey:'tpq-hijaiyah-audio',
+  soundButton:$('sound-toggle'),
+  musicButton:$('music-toggle'),
+  melody:[587.33,698.46,880,698.46,523.25,659.25,783.99,659.25]
+});
+const KEY='hijaiyah-game-v1';
+let save={total:0,stars:{},best:{},mastery:{}};
+try{const r=localStorage.getItem(KEY);if(r)save=Object.assign(save,JSON.parse(r));}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const mast=c=>save.mastery[c]||0;
+
+/* ---------- Suara ---------- */
+const synth=window.speechSynthesis;
+function arVoice(){if(!synth)return null;return synth.getVoices().find(v=>/^ar/i.test(v.lang))||null;}
+function hasAr(){return !!arVoice();}
+function speak(c){
+  if(!synth||!gameAudio.isSoundEnabled())return;
+  synth.cancel();
+  const u=new SpeechSynthesisUtterance(BY[c].s);
+  const v=arVoice();u.lang=v?v.lang:'ar-SA';if(v)u.voice=v;u.rate=.7;u.pitch=1.1;
+  synth.speak(u);
+}
+if(synth)synth.onvoiceschanged=()=>{if(!$('game').classList.contains('hide'))updateWarn();};
+/* ---------- Menu ---------- */
+function show(id){['menu','game','result'].forEach(s=>$(s).classList.toggle('hide',s!==id));if(id!=='game')gameAudio.stopMusic();window.scrollTo(0,0);}
+function unlocked(l){return l===1||(save.stars[l-1]||0)>=1;}
+function renderMenu(){
+  const st=Object.values(save.stars).reduce((a,b)=>a+b,0);
+  const hafal=LET.filter(l=>mast(l.c)>=3).length;
+  $('sTotal').textContent=save.total;$('sStars').textContent=st+'/9';$('sMaster').textContent=hafal+'/28';
+  $('levels').innerHTML='';
+  LV.forEach((lv,i)=>{
+    const n=i+1,b=document.createElement('button');b.className='lv';b.disabled=!unlocked(n);
+    const s=save.stars[n]||0;
+    b.innerHTML=`<span class="n">${unlocked(n)?n:'🔒'}</span><span><b>${lv.t}</b><small>${lv.d}${save.best[n]!=null?' · Terbaik: '+save.best[n]:''}</small></span><span class="st">${'⭐'.repeat(s)}${'☆'.repeat(3-s)}</span>`;
+    b.onclick=()=>start(n);$('levels').appendChild(b);
+  });
+  $('map').innerHTML=LET.map(l=>{const m=mast(l.c);return `<div class="${m>=3?'m2':m>=1?'m1':''}">${l.c}</div>`;}).join('');
+}
+
+/* ---------- Game ---------- */
+let G=null;
+function makeQuestions(level){
+  const jitter=l=>mast(l.c)+Math.random()*2;
+  if(level<3){
+    return LET.slice().sort((a,b)=>jitter(a)-jitter(b)).slice(0,10).map(l=>{
+      const others=shuffle(LET.filter(x=>x.c!==l.c)).slice(0,3);
+      return {t:l.c,opts:shuffle([l].concat(others)).map(x=>x.c)};
+    });
+  }
+  const pool=LET.filter(l=>GROUPS.some(g=>g.includes(l.c)));
+  return pool.sort((a,b)=>jitter(a)-jitter(b)).slice(0,10).map(l=>{
+    const g=GROUPS.find(g=>g.includes(l.c));
+    return {t:l.c,opts:shuffle(g)};
+  });
+}
+function start(level){
+  gameAudio.unlock();gameAudio.startMusic();gameAudio.play('start');
+  G={level,qs:makeQuestions(level),i:0,score:0,right:0,streak:0,tries:0,done:false};
+  show('game');$('gLevel').textContent=LV[level-1].t.split(' · ')[0];
+  next();
+}
+function updateWarn(){$('gWarn').classList.toggle('hide',hasAr()||!G);}
+function next(){
+  const q=G.qs[G.i];G.tries=0;G.done=false;
+  $('gBar').style.width=(G.i/10*100)+'%';
+  $('gScore').textContent='⭐ '+G.score;
+  $('fb').textContent='';
+  const L=BY[q.t],lv=G.level,ar=hasAr();
+  if(lv===1){$('gPrompt').innerHTML=`Cari huruf <b>${L.n}</b>`;$('gHint').textContent='Tekan 🔊 untuk mendengar namanya.';}
+  else{$('gPrompt').textContent='Dengarkan, lalu pilih huruf yang benar';
+       $('gHint').textContent=lv===3?'Hati-hati, bentuknya mirip!':(ar?'':'Nama huruf: '+L.n);
+       if(lv===3&&!ar)$('gHint').textContent='Hati-hati, bentuknya mirip! Nama huruf: '+L.n;}
+  updateWarn();
+  $('opts').innerHTML='';
+  q.opts.forEach(c=>{const b=document.createElement('button');b.className='opt';b.textContent=c;b.onclick=()=>pick(b,c);$('opts').appendChild(b);});
+  setTimeout(()=>speak(q.t),350);
+}
+function pick(btn,c){
+  if(G.done)return;
+  const q=G.qs[G.i];
+  if(c===q.t){
+    G.done=true;gameAudio.play('correct');btn.classList.add('ok');
+    [...$('opts').children].forEach(b=>b.disabled=true);
+    if(G.tries===0){
+      G.right++;G.streak++;
+      let pts=10+(G.level-1)*5+(G.streak>=3?5:0);
+      G.score+=pts;save.mastery[q.t]=mast(q.t)+1;
+      $('fb').style.color='var(--ok)';
+      $('fb').textContent=`Hebat! +${pts} poin${G.streak>=3?' 🔥 beruntun '+G.streak:''}`;
+    }else{
+      $('fb').style.color='var(--ok)';$('fb').textContent=`Benar! Itu huruf ${BY[q.t].n}.`;
+    }
+    $('gScore').textContent='⭐ '+G.score;
+    setTimeout(()=>{G.i++;G.i>=10?finish():next();},1300);
+  }else{
+    G.tries++;G.streak=0;gameAudio.play('wrong');btn.classList.add('bad');btn.disabled=true;
+    $('fb').style.color='var(--bad)';$('fb').textContent='Belum tepat, coba lagi ya!';
+    if(G.tries===1)speak(q.t);
+  }
+}
+function finish(){
+  const s=G.score,r=G.right,lv=G.level;
+  const stars=r>=9?3:r>=8?2:r>=6?1:0;
+  gameAudio.stopMusic();gameAudio.play(stars?'reward':'finish');
+  save.total+=s;
+  save.stars[lv]=Math.max(save.stars[lv]||0,stars);
+  save.best[lv]=Math.max(save.best[lv]||0,s);
+  persist();
+  $('gBar').style.width='100%';
+  $('rTitle').textContent=stars>=2?'Luar biasa! 🎉':stars===1?'Bagus sekali! 👏':'Ayo coba lagi! 💪';
+  $('rStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  $('rScore').textContent=s;$('rCorrect').textContent=r+'/10';
+  let m=stars===0?'Butuh minimal 6 jawaban benar (langsung benar) untuk mendapat bintang.':'Kamu mendapat '+stars+' bintang.';
+  if(stars>=1&&lv<3&&(save.stars[lv+1]||0)===0)m+=` Level ${lv+1} sudah terbuka!`;
+  $('rMsg').textContent=m;
+  $('again').onclick=()=>start(lv);
+  show('result');
+}
+$('say').onclick=()=>{if(G)speak(G.qs[G.i].t);};
+$('quit').onclick=()=>{if(synth)synth.cancel();gameAudio.stopMusic();renderMenu();show('menu');};
+$('toMenu').onclick=()=>{renderMenu();show('menu');};
+$('reset').onclick=()=>{if(confirm('Hapus semua progres belajar?')){gameAudio.play('click');save={total:0,stars:{},best:{},mastery:{}};persist();renderMenu();}};
+renderMenu();
+</script>
+</body>
+</html>

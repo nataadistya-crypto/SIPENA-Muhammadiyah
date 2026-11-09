@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tebak Kartu · SIPENA Muhammadiyah</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-kelas="sore">
+  <div class="langit" aria-hidden="true"></div>
+
+  <header class="atas">
+    <a class="tombol-kecil" id="btn-kembali" href="/games%20sore.html">← <span class="teks">Kembali</span></a>
+    <h1 class="judul">Tebak Kartu <small id="label-kelas"></small></h1>
+    <div class="kontrol">
+      <button class="ikon" id="btn-sfx" type="button" aria-pressed="true" aria-label="Efek suara" title="Efek suara">🔊</button>
+      <button class="ikon" id="btn-musik" type="button" aria-pressed="true" aria-label="Musik latar" title="Musik latar">🎵</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LAYAR MULAI -->
+    <section id="layar-mulai" class="layar aktif" aria-labelledby="judul-mulai">
+      <div class="sambutan">
+        <h2 id="judul-mulai">Ayo tebak kartunya!</h2>
+        <p id="sambutan-teks">Pilih satu kartu, jawab pertanyaannya, dan kumpulkan skor.</p>
+      </div>
+
+      <div class="pilih-kelas" role="radiogroup" aria-label="Pilih kelas">
+        <button type="button" role="radio" aria-checked="true" data-kelas="sore">
+          <span class="gambar" aria-hidden="true">🌞</span>
+          <span class="nama">Kelas Sore</span>
+          <span class="ket">Untuk anak kecil · huruf hijaiyah dan doa dasar</span>
+        </button>
+        <button type="button" role="radio" aria-checked="false" data-kelas="malam">
+          <span class="gambar" aria-hidden="true">🌙</span>
+          <span class="nama">Kelas Malam</span>
+          <span class="ket">Untuk anak lebih besar · tajwid dan sambung ayat</span>
+        </button>
+      </div>
+
+      <div class="pengaturan">
+        <fieldset>
+          <legend>Kartu di meja</legend>
+          <div class="segmen" id="set-meja">
+            <label><input type="radio" name="meja" value="8"><span>8</span></label>
+            <label><input type="radio" name="meja" value="12" checked><span>12</span></label>
+            <label><input type="radio" name="meja" value="16"><span>16</span></label>
+            <label><input type="radio" name="meja" value="20"><span>20</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Jumlah soal</legend>
+          <div class="segmen" id="set-jumlah">
+            <label><input type="radio" name="jumlah" value="10"><span>10</span></label>
+            <label><input type="radio" name="jumlah" value="20" checked><span>20</span></label>
+            <label><input type="radio" name="jumlah" value="30"><span>30</span></label>
+            <label><input type="radio" name="jumlah" value="0"><span>Semua</span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="aksi-tengah">
+        <button class="tombol" id="btn-mulai" type="button">Mulai main</button>
+        <a class="tombol sekunder kecil" id="btn-admin" href="admin.html">Kelola soal</a>
+      </div>
+      <p class="pesan" id="pesan-mulai" aria-live="polite"></p>
+      <p class="rekor" id="rekor"></p>
+    </section>
+
+    <!-- LAYAR MAIN -->
+    <section id="layar-main" class="layar" aria-label="Meja kartu">
+      <div class="status">
+        <span class="chip skor">Skor <b id="st-skor">0</b></span>
+        <span class="chip">Beruntun <b id="st-beruntun">0</b></span>
+        <span class="chip">Sisa soal <b id="st-sisa">0</b></span>
+        <div class="progres" role="progressbar" aria-label="Kemajuan" aria-valuemin="0" aria-valuemax="100"><i id="st-bar"></i></div>
+      </div>
+      <div class="meja" id="meja"></div>
+      <div class="alat-meja">
+        <button class="tombol sekunder kecil" id="btn-kocok" type="button">🔀 Kocok kartu</button>
+        <button class="tombol sekunder kecil" id="btn-selesai" type="button">Selesai</button>
+      </div>
+    </section>
+
+    <!-- LAYAR AKHIR -->
+    <section id="layar-akhir" class="layar" aria-labelledby="judul-akhir">
+      <div class="akhir">
+        <h2 id="judul-akhir">Hebat sekali!</h2>
+        <div class="bintang" id="ak-bintang" aria-hidden="true"></div>
+        <div class="angka-akhir" id="ak-skor">0</div>
+        <div>poin</div>
+        <div class="rincian">
+          <span class="b">✔ <span id="ak-benar">0</span> benar</span>
+          <span class="s">✘ <span id="ak-salah">0</span> belum tepat</span>
+        </div>
+        <p class="rekor" id="ak-rekor"></p>
+        <div class="aksi-tengah">
+          <button class="tombol" id="btn-ulang" type="button">Main lagi</button>
+          <button class="tombol sekunder kecil" id="btn-menu" type="button">Ke menu</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- JENDELA PERTANYAAN -->
+  <div class="modal" id="modal" hidden>
+    <div class="kartu-besar" id="kartu-besar" role="dialog" aria-modal="true" aria-labelledby="m-tanya">
+      <button class="tutup-x" id="m-tutup" type="button" aria-label="Kembalikan kartu ke meja">✕</button>
+      <span class="kategori" id="m-kategori"></span>
+      <div class="visual" id="m-visual" hidden></div>
+      <p class="tanya" id="m-tanya"></p>
+      <div class="jawaban" id="m-jawab"></div>
+      <div class="umpan" id="m-umpan" hidden aria-live="polite"></div>
+      <div class="aksi-modal"><button class="tombol" id="m-lanjut" type="button" hidden>Lanjut</button></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

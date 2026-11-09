@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Data Murid - SIPENA Muhammadiyah</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Halaman: Data Murid. Isi di bawah dihasilkan oleh public/js/app.js ke dalam <div id="app"> -->
+<div id="app">
+<header>
+ <b>
+  <img class="site-brand-logo" src="/assets/logo-muhammadiyah.png" alt=""> SIPENA Muhammadiyah
+ </b>
+ <span>
+  Ustadzah
+  <button>
+   Keluar
+  </button>
+ </span>
+</header>
+<nav>
+ <button class="">
+  Dashboard
+ </button>
+ <button class="on">
+  Murid
+ </button>
+ <button class="">
+  Absensi
+ </button>
+ <button class="">
+  Capaian
+ </button>
+ <button class="">
+  Tugas & nilai
+ </button>
+ <button class="">
+  Materi
+ </button>
+ <button class="">
+  Games
+ </button>
+ <button class="">
+  Akun wali
+ </button>
+ <button class="">
+  Laporan
+ </button>
+</nav>
+<main>
+ <form class="c">
+  <h3>
+   Tambah murid
+  </h3>
+  <div class="r">
+   <div>
+    <label>
+     Nama
+    </label>
+    <input name="nama" required>
+   </div>
+   <div>
+    <label>
+     No. absen
+    </label>
+    <input min="1" name="no" required style="width:80px" type="number">
+   </div>
+   <div>
+    <label>
+     Kelas
+    </label>
+    <select name="k">
+     <option selected>
+      sore
+     </option>
+     <option>
+      malam
+     </option>
+    </select>
+   </div>
+   <button class="p">
+    Simpan murid
+   </button>
+  </div>
+ </form>
+ <div class="c">
+  <div class="w">
+   <table>
+    <tr>
+     <th>
+      No
+     </th>
+     <th>
+      Nama
+     </th>
+     <th>
+      Kelas
+     </th>
+     <th>
+      Status
+     </th>
+     <th>
+     </th>
+    </tr>
+    <tr>
+     <td>
+      1
+     </td>
+     <td>
+      Aisyah
+     </td>
+     <td>
+      Kelas Sore
+     </td>
+     <td>
+      aktif
+     </td>
+     <td class="k">
+      <button>
+       Pindah ke malam
+      </button>
+      <button>
+       Nonaktifkan
+      </button>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      2
+     </td>
+     <td>
+      Budi
+     </td>
+     <td>
+      Kelas Sore
+     </td>
+     <td>
+      aktif
+     </td>
+     <td class="k">
+      <button>
+       Pindah ke malam
+      </button>
+      <button>
+       Nonaktifkan
+      </button>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      3
+     </td>
+     <td>
+      Citra
+     </td>
+     <td>
+      Kelas Sore
+     </td>
+     <td>
+      aktif
+     </td>
+     <td class="k">
+      <button>
+       Pindah ke malam
+      </button>
+      <button>
+       Nonaktifkan
+      </button>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      4
+     </td>
+     <td>
+      Dimas
+     </td>
+     <td>
+      Kelas Malam
+     </td>
+     <td>
+      aktif
+     </td>
+     <td class="k">
+      <button>
+       Nonaktifkan
+      </button>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      5
+     </td>
+     <td>
+      Eka
+     </td>
+     <td>
+      Kelas Malam
+     </td>
+     <td>
+      aktif
+     </td>
+     <td class="k">
+      <button>
+       Nonaktifkan
+      </button>
+     </td>
+    </tr>
+   </table>
+  </div>
+ </div>
+</main>
+
+</div>
+<script src="/public/js/app.js"></script></body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Detektif Tajwid</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef7ff;--card:#fff;--ink:#26445f;--mute:#63809a;--pri:#4598c9;--pri2:#337daa;--ok:#2fa84f;--okbg:#dff5e5;--bad:#d9534f;--badbg:#fde6e5;--gold:#70c8aa;--hl:#e3f6ed;--line:#cfe2ef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12152e;--card:#1c2147;--ink:#eceeff;--mute:#a9b0dd;--pri:#7d8cff;--pri2:#6676f0;--ok:#4cc46d;--okbg:#17432b;--bad:#ef7773;--badbg:#44211f;--hl:#5b4a0f;--line:#323a74}}
+:root[data-theme="dark"]{--bg:#12152e;--card:#1c2147;--ink:#eceeff;--mute:#a9b0dd;--pri:#7d8cff;--pri2:#6676f0;--ok:#4cc46d;--okbg:#17432b;--bad:#ef7773;--badbg:#44211f;--hl:#5b4a0f;--line:#323a74}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 12% 2%,#e0f6f0 0,transparent 34%),radial-gradient(ellipse at 90% 16%,#eeeaff 0,transparent 32%),var(--bg);color:var(--ink);font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;font-size:17px;min-height:100vh}
+.wrap{max-width:1060px;margin:0 auto;padding:22px}
+h1{font-size:clamp(30px,4vw,48px);margin:6px 0 2px;text-align:left;line-height:1.12}
+.sub{color:var(--mute);margin:8px 0 14px;font-size:17px}
+.card{background:rgba(255,255,255,.82);border:1px solid rgba(181,212,230,.8);border-radius:26px;padding:22px;margin-bottom:16px;box-shadow:0 18px 40px rgba(67,112,150,.09)}
+label.t{font-weight:700;display:block;margin-bottom:6px}
+input{width:100%;border:2px solid var(--line);border-radius:14px;padding:10px;font:inherit;background:var(--bg);color:var(--ink)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:16px;padding:12px 22px;background:linear-gradient(135deg,#62b8d7,#479ac1);color:#fff;cursor:pointer;font-size:18px;box-shadow:0 8px 18px rgba(64,145,183,.2)}
+.btn:hover{background:var(--pri2)}
+.btn.ghost{background:rgba(255,255,255,.7);color:var(--pri);border:1px solid #b8d9e8;box-shadow:none}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg button{font:inherit;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:10px;cursor:pointer;text-align:center}
+.seg button b{display:block;font-size:18px}.seg button small{color:var(--mute);line-height:1.2;display:block}
+.seg button.on{border-color:var(--pri);background:var(--bg)}
+.note{font-size:13px;color:var(--mute);text-align:center;margin-top:8px}
+.top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+.bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--gold));transition:width .3s}
+.ar{font-family:'Noto Naskh Arabic','Amiri',serif}
+.ayat{direction:rtl;text-align:center;font-family:'Noto Naskh Arabic','Amiri',serif;font-size:30px;line-height:2.2}
+.ayat .w{padding:0 4px;border-radius:10px;display:inline-block}
+.ayat .w.hl{background:var(--hl);box-shadow:0 0 0 2px var(--gold) inset}
+.ayat button.w{font:inherit;background:var(--card);color:var(--ink);border:3px solid var(--line);margin:3px;cursor:pointer}
+.ayat button.w:hover:not(:disabled){border-color:var(--pri)}
+.ayat button.w.ok{background:var(--okbg);border-color:var(--ok)}
+.ayat button.w.bad{background:var(--badbg);border-color:var(--bad)}
+.q{text-align:center}
+.prompt{font-size:20px;margin:4px 0 8px}
+.pbox{background:var(--bg);border-radius:16px;padding:8px 10px;margin:8px 0}
+.pbox small{color:var(--mute)}
+.opts{display:grid;gap:10px;margin-top:10px}
+.opt{font:inherit;font-size:19px;font-weight:700;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:10px;cursor:pointer}
+.opt.arx{font-family:'Noto Naskh Arabic',serif;font-size:30px;font-weight:500;direction:rtl}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad);animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{font-weight:700;font-size:20px;margin:10px 0 4px}
+.note2{text-align:left;background:var(--bg);border-left:6px solid var(--gold);border-radius:14px;padding:10px 12px;margin:8px 0;line-height:1.45}
+.inl{font-size:24px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:5}
+.ov .card{max-width:560px;width:100%;max-height:88vh;overflow:auto;margin:0}
+.stat{display:flex;align-items:center;gap:8px;margin:6px 0}
+.stat span.n{width:150px;font-size:15px}
+.stat .b{flex:1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.stat .b i{display:block;height:100%;background:var(--ok)}
+.hide{display:none}
+.big{font-size:44px;text-align:center}
+.audio-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.audio-controls button{font:inherit;font-size:14px;font-weight:700;border:2px solid var(--line);border-radius:99px;padding:6px 12px;background:var(--card);color:var(--ink);cursor:pointer}
+.audio-controls button[aria-pressed="true"]{border-color:var(--pri)}
+.game-toolbar{display:flex;justify-content:flex-end;margin-bottom:10px}
+.game-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.78fr);align-items:center;min-height:260px;overflow:hidden;padding:24px 34px;border-radius:34px;background:linear-gradient(115deg,#e1f6ef,#e9f4ff 58%,#f0eaff);box-shadow:0 20px 46px rgba(67,112,150,.12)}
+.game-hero::after{position:absolute;content:"";width:210px;height:210px;right:35%;top:-150px;border-radius:50%;background:rgba(255,255,255,.48)}
+.game-hero-copy{position:relative;z-index:1}
+.game-hero h1{color:#2c6078}
+.game-hero .sub{max-width:490px}
+.game-hero-art{position:relative;z-index:1;width:min(100%,360px);height:230px;justify-self:end;object-fit:contain;filter:drop-shadow(0 16px 16px rgba(54,91,125,.15));animation:game-character-float 4.5s ease-in-out infinite}
+@keyframes game-character-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.game-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.72);color:#438c83;font-size:13px;font-weight:800;letter-spacing:.04em}
+.setup-card{max-width:760px;margin:18px auto}
+.setup-title{margin:0 0 16px;color:#3b6d84;font-size:22px}
+.note{max-width:780px;margin:14px auto 0;padding:0 8px;line-height:1.5}
+.audio-controls button{border-color:rgba(174,209,225,.85);box-shadow:0 5px 14px rgba(67,112,150,.07)}
+.seg{gap:14px}
+.seg button{border-width:1px;border-radius:18px;background:rgba(255,255,255,.78);transition:transform .18s ease,background .18s ease,box-shadow .18s ease,border-color .18s ease}
+.seg button.on{border-color:#7bbfae;background:linear-gradient(145deg,#e5f7f1,#f7fcff);box-shadow:0 7px 18px rgba(77,157,137,.12)}
+.seg button:hover{transform:translateY(-2px)}
+#game .top{padding:10px 4px 0;color:#3b6d84}
+#game .card.q{padding:24px}
+#game .opt{border-width:1px;border-radius:18px;background:rgba(255,255,255,.88)}
+#game .opt:hover:not(:disabled){border-color:#64b6a4;background:#f0fbf7}
+#game .note2{border-left-color:#6bc2a5;background:linear-gradient(110deg,#f0faf7,#f6fbff)}
+#result .card{max-width:760px;margin:16px auto}
+@media(max-width:640px){.wrap{padding:14px}.game-toolbar{margin-bottom:8px}.game-hero{grid-template-columns:minmax(0,1.2fr) minmax(125px,.8fr);padding:20px 16px;border-radius:26px;min-height:210px}.game-hero-art{width:170px;height:145px;justify-self:end;align-self:end;margin-right:-8px}.game-hero h1{font-size:clamp(27px,6vw,36px)}.game-hero .sub{font-size:13px;line-height:1.4}.setup-card{padding:18px}.seg{grid-template-columns:1fr}.audio-controls{gap:6px}.audio-controls button{font-size:12px;padding:6px 9px}}
+@media(prefers-reduced-motion:reduce){.game-hero-art{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="game-toolbar">
+  <div class="audio-controls" aria-label="Pengaturan audio">
+    <button id="sound-toggle" type="button" aria-label="Efek suara" aria-pressed="true">🔊 Suara: Aktif</button>
+    <button id="music-toggle" type="button" aria-label="Musik latar" aria-pressed="true">🎵 Musik: Aktif</button>
+  </div>
+</div>
+
+<header class="game-hero">
+  <div class="game-hero-copy">
+    <span class="game-kicker">🕌 Misi belajar seru</span>
+    <h1>Detektif Tajwid</h1>
+    <p class="sub">Ayo selidiki hukum nun sukun dan tanwin bersama teman-teman!</p>
+  </div>
+  <img class="game-hero-art" src="/assets/sipena-anak-pasangan.png" alt="Anak laki-laki dan perempuan muslim belajar bersama">
+</header>
+
+<section id="setup">
+  <div class="card setup-card">
+    <h2 class="setup-title">Siap memulai penyelidikan?</h2>
+    <label class="t">Pilih tingkat kelas</label>
+    <div class="seg">
+      <button data-v="sore" class="on"><b>🌇 Kelas Sore</b><small>Izhar, Idgham, Ikhfa</small></button>
+      <button data-v="malam"><b>🌙 Kelas Malam</b><small>5 hukum lengkap, termasuk Iqlab</small></button>
+    </div>
+    <label class="t" style="margin-top:12px">Nama detektif</label>
+    <input id="nm" placeholder="Contoh: Aisyah">
+  </div>
+  <div class="row"><button class="btn" id="go">Mulai Penyelidikan 🔍</button><button class="btn ghost" id="book">📒 Buku Catatan</button></div>
+  <div class="row" style="margin-top:10px"><a class="btn ghost" id="back-to-games" href="/games%20malam.html" style="text-decoration:none">Kembali ke menu Games</a></div>
+  <div class="note">Ayat diambil dari QS. 104 dan 109–114 (Juz 30). Aturan tajwid mengikuti kaidah umum nun sukun dan tanwin. Guru tetap perlu memeriksanya dengan mushaf dan buku tajwid.</div>
+</section>
+
+<section id="game" class="hide">
+  <div class="top"><span id="gInfo"></span><span id="gNo"></span></div>
+  <div class="bar"><i id="gBar"></i></div>
+  <div class="card q">
+    <div id="qBody"></div>
+    <div id="after" class="hide">
+      <div class="fb" id="fb"></div>
+      <div id="expl"></div>
+      <div class="row"><button class="btn" id="next">Lanjut ▶</button></div>
+    </div>
+  </div>
+  <div class="row"><button class="btn ghost" id="book2">📒 Buku Catatan</button><button class="btn ghost" id="quit">Keluar</button></div>
+</section>
+
+<section id="result" class="hide">
+  <h1>🏅 Kasus Selesai!</h1>
+  <div class="card"><div class="big" id="rEmoji"></div><div id="rTop" style="text-align:center;font-size:20px;font-weight:700"></div>
+    <div id="rStats" style="margin-top:12px"></div><div id="rTip" class="note2"></div></div>
+  <div class="row"><button class="btn" id="again">Main lagi</button><button class="btn ghost" id="toSetup">Menu awal</button></div>
+</section>
+</div>
+<div class="ov hide" id="ov"><div class="card" id="ovc"></div></div>
+
+<script src="/games/shared/audio.js"></script>
+<script>
+/* ===== Ayat (QS. 104 dan 109–114), disalin dari surahquran.com dan quranpedia.net ===== */
+const N={104:"Al-Humazah",109:"Al-Kafirun",111:"Al-Lahab",112:"Al-Ikhlas",113:"Al-Falaq",114:"An-Nas"};
+const A={
+"104:1":"وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ","104:2":"الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ","104:4":"كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ",
+"109:3":"وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ","109:4":"وَلَا أَنَا عَابِدٌ مَا عَبَدْتُمْ",
+"111:1":"تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ","111:2":"مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ","111:3":"سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ","111:5":"فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ",
+"112:4":"وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+"113:2":"مِن شَرِّ مَا خَلَقَ","113:3":"وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","113:4":"وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ","113:5":"وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+"114:4":"مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ"
+};
+/* [ayat, indeks kata (n sukun/tanwin), hukum, n=nun sukun / t=tanwin, huruf sesudahnya, 1=dalam satu kata] */
+const RAW=[
+["109:3",1,"ikhfa","n","ت",1],["109:4",2,"idb","t","م"],["111:1",3,"idb","t","و"],["111:2",2,"izhar","n","ه",1],
+["111:3",1,"ikhfa","t","ذ"],["111:5",2,"idb","t","م"],["111:5",3,"idb","n","م"],["112:4",1,"idl","n","ل"],["112:4",3,"izhar","t","ء"],
+["113:2",0,"ikhfa","n","ش"],["113:3",0,"ikhfa","n","ش"],["113:3",2,"izhar","t","ء"],["113:4",0,"ikhfa","n","ش"],
+["113:5",0,"ikhfa","n","ش"],["113:5",2,"izhar","t","ء"],["114:4",0,"ikhfa","n","ش"],
+["104:1",0,"idl","t","ل"],["104:1",2,"idl","t","ل"],["104:2",2,"idb","t","و"],["104:4",1,"iqlab","n","ب",1]
+];
+const words=s=>{const r=[];s.split(" ").forEach(t=>{if(/^[\u06D6-\u06DC]+$/.test(t)&&r.length)r[r.length-1]+=" "+t;else if(t)r.push(t);});return r;};
+const C=RAW.map(([k,wi,h,tr,L,same])=>({k,wi,h,tr,L,same:!!same,t:A[k],w:words(A[k])}));
+const cover=c=>c.same?[c.wi]:[c.wi,c.wi+1];
+
+/* ===== Kaidah tajwid ===== */
+const H={
+ izhar:{n:"Izhar",L:"ء ه ع ح غ خ",how:"Dibaca jelas dan terang, tanpa dengung."},
+ idb:{n:"Idgham Bighunnah",L:"ي ن م و",how:"Nun/tanwin dilebur ke huruf sesudahnya, disertai dengung."},
+ idl:{n:"Idgham Bilaghunnah",L:"ل ر",how:"Nun/tanwin dilebur ke huruf sesudahnya, tanpa dengung."},
+ iqlab:{n:"Iqlab",L:"ب",how:"Bunyi nun/tanwin diganti menjadi mim, bibir dirapatkan ringan, disertai dengung."},
+ ikhfa:{n:"Ikhfa",L:"ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك",how:"Dibaca samar (antara izhar dan idgham), disertai dengung."},
+ idg:{n:"Idgham",L:"ي ن م و ل ر",how:"Nun/tanwin dilebur ke huruf sesudahnya. Ada yang dengan dengung (ي ن م و) dan ada yang tanpa dengung (ل ر)."}
+};
+const hOfLetter=L=>{for(const h of ["izhar","idb","idl","iqlab"])if(H[h].L.split(" ").includes(L))return h;return "ikhfa";};
+const LD=L=>L==="ء"?"ء (hamzah)":L;
+
+/* ===== State ===== */
+let cls="sore",name="",Q=[],qi=0,score=0,right=0,stats={},cur=null;
+const $=id=>document.getElementById(id);
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GR=h=>cls==="sore"&&(h==="idb"||h==="idl")?"idg":h;
+const GROUPS=()=>cls==="sore"?["izhar","idg","ikhfa"]:["izhar","idb","idl","iqlab","ikhfa"];
+const CASES=()=>C.filter(c=>GROUPS().includes(GR(c.h)));
+
+const initialClass=new URLSearchParams(location.search).get("kelas");
+if(initialClass==="malam")cls="malam";
+const gameAudio=window.TPQGameAudio.create({
+  storageKey:"tpq-detektif-tajwid-audio",
+  soundButton:$("sound-toggle"),
+  musicButton:$("music-toggle"),
+  melody:[493.88,587.33,659.25,783.99,659.25,587.33,523.25,587.33]
+});
+document.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b.dataset.v===cls));
+$("back-to-games").href=cls==="malam"?"/games%20malam.html":"/games%20sore.html";
+
+function show(id){["setup","game","result"].forEach(s=>$(s).classList.toggle("hide",s!==id));if(id!=="game")gameAudio.stopMusic();window.scrollTo(0,0);}
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{gameAudio.play("click");cls=b.dataset.v;$("back-to-games").href=cls==="malam"?"/games%20malam.html":"/games%20sore.html";document.querySelectorAll(".seg button").forEach(x=>x.classList.toggle("on",x===b));});
+
+/* ===== Buku Catatan ===== */
+function book(){
+  gameAudio.play("click");
+  const rows=["izhar","idb","idl","iqlab","ikhfa"].map(h=>`<tr><td><b>${H[h].n}</b></td><td class="ar" style="font-size:22px;direction:rtl;text-align:right">${H[h].L}</td><td>${H[h].how}</td></tr>`).join("");
+  $("ovc").innerHTML=`<h2 style="margin-top:0">📒 Buku Catatan Detektif</h2><p>Perhatikan <b>nun sukun</b> (نْ) atau <b>tanwin</b> (ـً ـٍ ـٌ), lalu lihat <b>huruf sesudahnya</b>.</p><table><tr><th>Hukum</th><th>Huruf</th><th>Cara baca</th></tr>${rows}</table><div class="row" style="margin-top:12px"><button class="btn" id="cl">Tutup</button></div>`;
+  $("ov").classList.remove("hide");$("cl").onclick=()=>{gameAudio.play("click");$("ov").classList.add("hide");};
+}
+$("book").onclick=book;$("book2").onclick=book;
+
+/* ===== Penjelasan ===== */
+function ayatH(c,hl){return `<div class="ayat">${c.w.map((x,i)=>`<span class="w ${hl&&cover(c).includes(i)?"hl":""}">${x}</span>`).join(" ")}</div>`;}
+function explain(c){
+  const X=H[c.h],tr=c.tr==="n"?"Nun sukun":"Tanwin";
+  return `<div class="note2"><b>🔎 Catatan Detektif — ${X.n}</b>${ayatH(c,1)}<small>QS. ${N[c.k.split(":")[0]]} ayat ${c.k.split(":")[1]}</small><br>
+  ${tr} ${c.same?"di dalam kata ini":""} bertemu huruf <span class="ar inl">${LD(c.L)}</span>, dan huruf ini termasuk kelompok <b>${X.n}</b> (<span class="ar inl">${X.L}</span>).<br>💡 ${X.how}</div>`;
+}
+function explainRule(L,tr){
+  const h=hOfLetter(L),X=H[h];
+  const ex=C.find(c=>c.h===h);
+  return `<div class="note2"><b>🔎 Catatan Detektif — ${X.n}</b><br>${tr==="n"?"Nun sukun":"Tanwin"} bertemu huruf <span class="ar inl">${LD(L)}</span> termasuk kelompok <b>${X.n}</b> (<span class="ar inl">${X.L}</span>).<br>💡 ${X.how}</div>${ex?explain(ex):""}`;
+}
+
+/* ===== Pembuat soal ===== */
+function hukumOpts(g){
+  const all=GROUPS(),n=cls==="malam"?4:3;
+  return sh([g].concat(sh(all.filter(x=>x!==g)).slice(0,n-1)));
+}
+function qID(){
+  const c=pick(CASES()),g=GR(c.h);
+  return{kind:"id",g,c,prompt:"Apa hukum bacaan pada bagian yang <b>disorot</b>?",body:ayatH(c,1)+`<small style="color:var(--mute)">Lihat nun sukun/tanwin pada kata yang disorot dan huruf sesudahnya.</small>`,opts:hukumOpts(g).map(k=>({k,l:H[k].n})),ans:g,ex:explain(c)};
+}
+function qRule(){
+  const g=pick(GROUPS()),L=pick(H[g==="idg"?"idg":g].L.split(" ")),tr=pick(["n","t"]);
+  return{kind:"rule",g,prompt:`${tr==="n"?"Nun sukun":"Tanwin"} bertemu huruf <span class="ar" style="font-size:40px">${LD(L)}</span><br>Apa hukum bacaannya?`,body:"",opts:hukumOpts(g).map(k=>({k,l:H[k].n})),ans:g,ex:explainRule(L,tr)};
+}
+function snippet(c){return cover(c).map(i=>c.w[i]).join(" ");}
+function qPick(){
+  const cs=CASES(),c=pick(cs),g=GR(c.h),n=cls==="malam"?4:3;
+  const seen=new Set([snippet(c)]),ds=[];
+  sh(cs.filter(x=>GR(x.h)!==g)).forEach(x=>{if(ds.length<n-1&&!seen.has(snippet(x))){seen.add(snippet(x));ds.push(x);}});
+  const opts=sh([c].concat(ds)).map(x=>({k:x,l:snippet(x)}));
+  return{kind:"pick",g,prompt:`Pilih contoh bacaan <b>${H[g].n}</b>`,body:"",opts,ans:c,arx:true,ex:explain(c)+ds.map(d=>`<div class="note2"><b>${snippet(d)}</b> → ${H[d.h].n} (nun/tanwin + <span class="ar inl">${LD(d.L)}</span>)</div>`).join("")};
+}
+function qFind(){
+  const byK={};CASES().forEach(c=>(byK[c.k]=byK[c.k]||[]).push(c));
+  const k=pick(Object.keys(byK)),cs=byK[k],g=GR(pick(cs).h);
+  const target=cs.filter(c=>GR(c.h)===g),ok=new Set(target.flatMap(cover));
+  return{kind:"find",g,c:cs[0],cs,target,ok,prompt:`Temukan bacaan <b>${H[g].n}</b> pada ayat ini. Ketuk katanya!`,body:"",ex:target.map(explain).join("")};
+}
+function makeQs(){
+  const n=cls==="malam"?10:8,f=[qID,qFind,qPick,qRule];let out=[];
+  while(out.length<n)out=out.concat(sh(f));
+  return out.slice(0,n).map(g=>g());
+}
+
+/* ===== Jalannya game ===== */
+function start(){
+  gameAudio.startMusic();
+  Q=makeQs();qi=0;score=0;right=0;stats={};GROUPS().forEach(g=>stats[g]={c:0,t:0});
+  $("gInfo").textContent=(cls==="sore"?"🌇 Sore":"🌙 Malam")+" · "+name;show("game");ask();
+}
+$("go").onclick=()=>{gameAudio.unlock();gameAudio.play("start");name=$("nm").value.trim()||"Detektif";start();};
+$("again").onclick=()=>{gameAudio.play("click");start();};$("toSetup").onclick=()=>{gameAudio.play("click");show("setup");};
+$("quit").onclick=()=>{if(confirm("Keluar dari penyelidikan?")){gameAudio.stopMusic();gameAudio.play("click");show("setup");}};
+function ask(){
+  cur=Q[qi];$("gNo").textContent="Kasus "+(qi+1)+"/"+Q.length+" · ⭐ "+score;$("gBar").style.width=(qi/Q.length*100)+"%";
+  $("after").classList.add("hide");
+  let h=`<div class="prompt">${cur.prompt}</div>`;
+  if(cur.kind==="find"){
+    h+=`<div class="pbox"><div class="ayat" id="fw">${cur.c.w.map((x,i)=>`<button class="w" data-i="${i}">${x}</button>`).join(" ")}</div></div>`;
+  }else{
+    h+=`<div class="pbox">${cur.body||""}</div><div class="opts" id="opts">${cur.opts.map((o,i)=>`<button class="opt ${cur.arx?"arx":""}" data-i="${i}">${o.l}</button>`).join("")}</div>`;
+    if(!cur.body)h=h.replace('<div class="pbox"></div>',"");
+  }
+  $("qBody").innerHTML=h;
+  if(cur.kind==="find")$("fw").querySelectorAll("button").forEach(b=>b.onclick=()=>answerFind(+b.dataset.i,b));
+  else $("opts").querySelectorAll("button").forEach(b=>b.onclick=()=>answerOpt(+b.dataset.i,b));
+}
+function finish(good,fbExtra){
+  gameAudio.play(good?"correct":"wrong");
+  const s=stats[cur.g];s.t++;if(good){s.c++;score+=10;right++;}
+  $("fb").style.color=good?"var(--ok)":"var(--bad)";
+  $("fb").textContent=good?"✅ Tepat, Detektif! +10":"❌ Belum tepat. Ini petunjuknya:";
+  $("expl").innerHTML=(fbExtra||"")+cur.ex;
+  $("next").textContent=qi+1>=Q.length?"Lihat Laporan 🏅":"Lanjut ▶";
+  $("after").classList.remove("hide");$("gNo").textContent="Kasus "+(qi+1)+"/"+Q.length+" · ⭐ "+score;
+  $("after").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function answerOpt(i,btn){
+  const bs=[...$("opts").children];bs.forEach(b=>b.disabled=true);
+  const o=cur.opts[i],good=o.k===cur.ans;
+  btn.classList.add(good?"ok":"bad");
+  if(!good)bs[cur.opts.findIndex(x=>x.k===cur.ans)].classList.add("ok");
+  finish(good);
+}
+function answerFind(i,btn){
+  const bs=[...$("fw").children];bs.forEach(b=>b.disabled=true);
+  const good=cur.ok.has(i);
+  bs.forEach((b,j)=>{if(cur.ok.has(j))b.classList.add("ok");});
+  let extra="";
+  if(!good){
+    btn.classList.add("bad");
+    const o=cur.cs.find(c=>cover(c).includes(i));
+    extra=o?`<div class="note2">Kata yang kamu pilih termasuk <b>${H[o.h].n}</b>, bukan ${H[cur.g].n}.</div>`
+      :`<div class="note2">Kata yang kamu pilih tidak memuat nun sukun/tanwin yang bertemu huruf hukum yang dicari.</div>`;
+  }
+  finish(good,extra);
+}
+$("next").onclick=()=>{gameAudio.play("click");qi++;qi>=Q.length?done():ask();};
+
+/* ===== Laporan ===== */
+function done(){
+  gameAudio.stopMusic();gameAudio.play("reward");
+  const p=right/Q.length;
+  $("rEmoji").textContent=p>=.9?"🏆":p>=.7?"🥈":p>=.5?"🥉":"🔍";
+  $("rTop").textContent=`${name}: ${right}/${Q.length} kasus terpecahkan · ${score} poin`;
+  let weak=null,wr=2;
+  $("rStats").innerHTML=GROUPS().map(g=>{const s=stats[g],r=s.t?s.c/s.t:null;if(r!==null&&r<wr){wr=r;weak=g;}
+    return `<div class="stat"><span class="n">${H[g].n}</span><div class="b"><i style="width:${r===null?0:r*100}%"></i></div><span>${s.t?s.c+"/"+s.t:"–"}</span></div>`;}).join("");
+  $("rTip").innerHTML=weak&&wr<1?`💡 <b>Perlu dilatih:</b> ${H[weak].n}. Huruf pemicunya: <span class="ar inl">${H[weak].L}</span>. ${H[weak].how}`:`💡 Hebat! Semua hukum yang diselidiki sudah tepat. Coba lagi dengan kasus yang berbeda.`;
+  show("result");
+}
+</script>
+</body>
+</html>

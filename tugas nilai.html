@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tugas Nilai - SIPENA Muhammadiyah</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Halaman: Tugas Nilai. Isi di bawah dihasilkan oleh public/js/app.js ke dalam <div id="app"> -->
+<div id="app">
+<header>
+ <b>
+  <img class="site-brand-logo" src="/assets/logo-muhammadiyah.png" alt=""> SIPENA Muhammadiyah
+ </b>
+ <span>
+  Ustadzah
+  <button>
+   Keluar
+  </button>
+ </span>
+</header>
+<nav>
+ <button class="">
+  Dashboard
+ </button>
+ <button class="">
+  Murid
+ </button>
+ <button class="">
+  Absensi
+ </button>
+ <button class="">
+  Capaian
+ </button>
+ <button class="on">
+  Tugas & nilai
+ </button>
+ <button class="">
+  Materi
+ </button>
+ <button class="">
+  Games
+ </button>
+ <button class="">
+  Akun wali
+ </button>
+ <button class="">
+  Laporan
+ </button>
+</nav>
+<main>
+ <div class="c">
+  <div class="r">
+   <div>
+    <label>
+     Kelas
+    </label>
+    <select>
+     <option selected value="sore">
+      Kelas Sore
+     </option>
+     <option value="malam">
+      Kelas Malam
+     </option>
+    </select>
+   </div>
+  </div>
+ </div>
+ <form class="c">
+  <div class="r">
+   <div>
+    <label>
+     Tugas baru
+    </label>
+    <input name="j" placeholder="Contoh: Menulis huruf Alif&ndash;Tsa" required>
+   </div>
+   <button class="p">
+    Buat tugas
+   </button>
+  </div>
+ </form>
+ <form class="c">
+  <label>
+   Pilih tugas
+  </label>
+  <select>
+   <option selected value="t9">
+    Menulis huruf Alif sampai Tsa
+   </option>
+  </select>
+  <table>
+   <tr>
+    <td>
+     Aisyah
+    </td>
+    <td>
+     <input max="100" min="0" name="s1" style="width:90px" type="number" value="90">
+    </td>
+   </tr>
+   <tr>
+    <td>
+     Budi
+    </td>
+    <td>
+     <input max="100" min="0" name="s2" style="width:90px" type="number" value="75">
+    </td>
+   </tr>
+   <tr>
+    <td>
+     Citra
+    </td>
+    <td>
+     <input max="100" min="0" name="s3" style="width:90px" type="number" value>
+    </td>
+   </tr>
+  </table>
+  <p>
+   <button class="p">
+    Simpan nilai
+   </button>
+  </p>
+ </form>
+</main>
+
+</div>
+<script src="/public/js/app.js"></script></body>
+</html>

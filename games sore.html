@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Games Kelas Sore - SIPENA Muhammadiyah</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Halaman: Games Kelas Sore. Isi di bawah dihasilkan oleh public/js/app.js ke dalam <div id="app"> -->
+<div id="app">
+<header>
+ <b>
+  <img class="site-brand-logo" src="/assets/logo-muhammadiyah.png" alt=""> SIPENA Muhammadiyah
+ </b>
+ <span>
+  Ustadzah
+  <button>
+   Keluar
+  </button>
+ </span>
+</header>
+<nav>
+ <button class="">
+  Dashboard
+ </button>
+ <button class="">
+  Murid
+ </button>
+ <button class="">
+  Absensi
+ </button>
+ <button class="">
+  Capaian
+ </button>
+ <button class="">
+  Tugas & nilai
+ </button>
+ <button class="">
+  Materi
+ </button>
+ <button class="on">
+  Games
+ </button>
+ <button class="">
+  Akun wali
+ </button>
+ <button class="">
+  Laporan
+ </button>
+</nav>
+<main>
+ <div class="c">
+  <div class="r">
+   <div>
+    <label>
+     Kelas
+    </label>
+    <select>
+     <option selected value="sore">
+      Kelas Sore
+     </option>
+     <option value="malam">
+      Kelas Malam
+     </option>
+    </select>
+   </div>
+  </div>
+ </div>
+ <div class="g">
+  <button class="p">
+   Tebak Huruf
+  </button>
+  <button class="p">
+   Hitung Cepat
+  </button>
+  <button class="p">
+   Cocokkan Huruf
+  </button>
+  <button class="p">
+   Kuis
+  </button>
+ </div>
+ <div class="c" id="gm">
+  Pilih game atau kuis untuk dimainkan bersama murid.
+ </div>
+ <form class="c">
+  <h3>
+   Soal kuis (1)
+  </h3>
+  <label>
+   Pertanyaan
+  </label>
+  <input name="q" required style="width:100%">
+  <div class="r">
+   <div>
+    <label>
+     Pilihan 1
+    </label>
+    <input name="o1" required>
+   </div>
+   <div>
+    <label>
+     Pilihan 2
+    </label>
+    <input name="o2" required>
+   </div>
+   <div>
+    <label>
+     Pilihan 3
+    </label>
+    <input name="o3" required>
+   </div>
+   <div>
+    <label>
+     Pilihan 4
+    </label>
+    <input name="o4" required>
+   </div>
+   <div>
+    <label>
+     Jawaban benar
+    </label>
+    <select name="a">
+     <option>
+      1
+     </option>
+     <option>
+      2
+     </option>
+     <option>
+      3
+     </option>
+     <option>
+      4
+     </option>
+    </select>
+   </div>
+  </div>
+  <p>
+   <button class="p">
+    Tambah soal
+   </button>
+  </p>
+  <p>
+   Huruf pertama hijaiyah adalah&hellip;
+   <button type="button">
+    Hapus
+   </button>
+  </p>
+ </form>
+</main>
+
+</div>
+<script src="/public/js/app.js"></script></body>
+</html>

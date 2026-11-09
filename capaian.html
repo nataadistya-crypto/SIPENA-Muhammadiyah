@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capaian - SIPENA Muhammadiyah</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Halaman: Capaian. Isi di bawah dihasilkan oleh public/js/app.js ke dalam <div id="app"> -->
+<div id="app">
+<header>
+ <b>
+  <img class="site-brand-logo" src="/assets/logo-muhammadiyah.png" alt=""> SIPENA Muhammadiyah
+ </b>
+ <span>
+  Ustadzah
+  <button>
+   Keluar
+  </button>
+ </span>
+</header>
+<nav>
+ <button class="">
+  Dashboard
+ </button>
+ <button class="">
+  Murid
+ </button>
+ <button class="">
+  Absensi
+ </button>
+ <button class="on">
+  Capaian
+ </button>
+ <button class="">
+  Tugas & nilai
+ </button>
+ <button class="">
+  Materi
+ </button>
+ <button class="">
+  Games
+ </button>
+ <button class="">
+  Akun wali
+ </button>
+ <button class="">
+  Laporan
+ </button>
+</nav>
+<main>
+ <div class="c">
+  <div class="r">
+   <div>
+    <label>
+     Kelas
+    </label>
+    <select>
+     <option selected value="sore">
+      Kelas Sore
+     </option>
+     <option value="malam">
+      Kelas Malam
+     </option>
+    </select>
+   </div>
+  </div>
+ </div>
+ <form class="c">
+  <div class="r">
+   <div>
+    <label>
+     Murid
+    </label>
+    <select name="m">
+     <option selected value="s1">
+      Aisyah
+     </option>
+     <option value="s2">
+      Budi
+     </option>
+     <option value="s3">
+      Citra
+     </option>
+    </select>
+   </div>
+   <div>
+    <label>
+     Jilid Iqra&rsquo;/Ummi
+    </label>
+    <select name="j">
+     <option>
+      1
+     </option>
+     <option>
+      2
+     </option>
+     <option>
+      3
+     </option>
+     <option>
+      4
+     </option>
+     <option>
+      5
+     </option>
+     <option>
+      6
+     </option>
+    </select>
+   </div>
+   <div>
+    <label>
+     Halaman
+    </label>
+    <input min="1" name="h" required style="width:80px" type="number">
+   </div>
+   <div>
+    <label>
+     Hasil
+    </label>
+    <select name="hs">
+     <option>
+      Lanjut
+     </option>
+     <option>
+      Ulang
+     </option>
+    </select>
+   </div>
+  </div>
+  <p class="k">
+   <label>
+    <input name="lulus" type="checkbox">
+    Lulus jilid ini
+   </label>
+   <label>
+    <input name="bc" type="checkbox">
+    Bisa membaca
+   </label>
+   <label>
+    <input name="tl" type="checkbox">
+    Bisa menulis
+   </label>
+   <label>
+    <input name="hg" type="checkbox">
+    Bisa berhitung
+   </label>
+  </p>
+  <label>
+   Catatan perkembangan
+  </label>
+  <textarea name="n" style="width:100%"></textarea>
+  <p>
+   <button class="p">
+    Simpan capaian
+   </button>
+  </p>
+ </form>
+ <div class="c">
+  <h3>
+   Riwayat Aisyah
+  </h3>
+  <div class="w">
+   <table>
+    <tr>
+     <td>
+      2026-10-12
+     </td>
+     <td>
+      Jilid 3, hal 12
+     </td>
+     <td>
+      Lanjut
+     </td>
+     <td>
+      Masih tertukar huruf ba dan ta
+     </td>
+    </tr>
+   </table>
+  </div>
+ </div>
+</main>
+
+</div>
+<script src="/public/js/app.js"></script></body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kelola Soal Tebak Kartu · SIPENA</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-kelas="admin">
+  <header class="atas">
+    <a class="tombol-kecil" id="btn-kembali" href="index.html">← <span class="teks">Ke game</span></a>
+    <h1 class="judul">Kelola soal Tebak Kartu <small id="info-mode"></small></h1>
+  </header>
+
+  <main>
+    <div class="admin">
+      <!-- FORM -->
+      <section class="kartu-panel" aria-labelledby="judul-form">
+        <h2 id="judul-form">Tambah soal</h2>
+        <div id="form-soal">
+          <input type="hidden" id="f-id">
+
+          <label for="f-kelas">Untuk kelas</label>
+          <select id="f-kelas">
+            <option value="sore">Kelas Sore</option>
+            <option value="malam">Kelas Malam</option>
+            <option value="semua">Kedua kelas</option>
+          </select>
+
+          <label for="f-kategori">Kategori <small>(contoh: Huruf hijaiyah, Doa harian, Tajwid, Sambung ayat)</small></label>
+          <input type="text" id="f-kategori" maxlength="40">
+
+          <label for="f-visual">Tampilan besar <small>(opsional: huruf Arab, emoji, atau angka)</small></label>
+          <input type="text" id="f-visual" maxlength="30">
+
+          <label for="f-tanya">Pertanyaan</label>
+          <textarea id="f-tanya" maxlength="300"></textarea>
+
+          <label for="f-jawab">Jawaban yang benar</label>
+          <input type="text" id="f-jawab" maxlength="120">
+
+          <label for="f-salah">Pilihan yang salah <small>(satu baris satu pilihan, boleh kosong. Kalau kosong, anak menjawab lisan dan ustadzah yang menilai)</small></label>
+          <textarea id="f-salah" maxlength="400"></textarea>
+
+          <label for="f-jelas">Penjelasan <small>(opsional, tampil setelah dijawab)</small></label>
+          <input type="text" id="f-jelas" maxlength="200">
+
+          <div class="baris-tombol">
+            <button class="tombol kecil" id="btn-simpan" type="button">Simpan soal</button>
+            <button class="tombol sekunder kecil" id="btn-batal" type="button" hidden>Batal ubah</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- DAFTAR -->
+      <section class="kartu-panel" aria-labelledby="judul-daftar">
+        <h2 id="judul-daftar">Daftar soal <small id="jumlah"></small></h2>
+        <div class="alat">
+          <input type="search" id="cari" placeholder="Cari pertanyaan atau kategori" aria-label="Cari soal">
+          <select id="saring" aria-label="Saring kelas">
+            <option value="">Semua kelas</option>
+            <option value="sore">Kelas Sore</option>
+            <option value="malam">Kelas Malam</option>
+            <option value="semua">Kedua kelas</option>
+          </select>
+        </div>
+        <div class="tabel-bungkus">
+          <table class="soal">
+            <thead><tr><th>Kelas</th><th>Soal</th><th>Jawaban</th><th><span class="sr">Aksi</span></th></tr></thead>
+            <tbody id="isi-tabel"></tbody>
+          </table>
+        </div>
+        <div class="kosong" id="kosong" hidden>Belum ada soal yang cocok. Tambahkan lewat formulir di samping.</div>
+
+        <div class="baris-tombol">
+          <button class="tombol sekunder kecil" id="btn-ekspor" type="button">Unduh cadangan (.json)</button>
+          <button class="tombol sekunder kecil" id="btn-impor" type="button">Pulihkan dari file</button>
+          <button class="tombol sekunder kecil" id="btn-contoh" type="button">Kembalikan soal contoh</button>
+          <input type="file" id="berkas" accept="application/json,.json" hidden>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

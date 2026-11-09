@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roda Keberuntungan · SIPENA Muhammadiyah</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff4e0;--card:#ffffff;--ink:#3b2a14;--mute:#7d6a52;--pri:#e8590c;--pri2:#c24a08;--ok:#2fa84f;--bad:#d9534f;--line:#f1d9b5;--gold:#f5b301;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241a0e;--card:#33250f;--ink:#fff1db;--mute:#c9b08a;--pri:#ff8a3d;--pri2:#ff7a22;--line:#5a4325}}
+:root[data-theme="dark"]{--bg:#241a0e;--card:#33250f;--ink:#fff1db;--mute:#c9b08a;--pri:#ff8a3d;--pri2:#ff7a22;--line:#5a4325}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;font-size:17px;min-height:100vh}
+.wrap{max-width:620px;margin:0 auto;padding:16px}
+h1{font-size:30px;margin:6px 0 2px;text-align:center}
+.sub{text-align:center;color:var(--mute);margin:0 0 14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
+textarea{width:100%;min-height:150px;border:2px solid var(--line);border-radius:14px;padding:10px;font:inherit;background:var(--bg);color:var(--ink);resize:vertical}
+label.t{font-weight:700;display:block;margin-bottom:6px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:16px;padding:12px 22px;background:var(--pri);color:#fff;cursor:pointer;font-size:18px}
+.btn:hover:not(:disabled){background:var(--pri2)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cls button{font:inherit;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:12px;cursor:pointer;text-align:center}
+.cls button b{display:block;font-size:20px}.cls button small{color:var(--mute)}
+.cls button.on{border-color:var(--pri);background:var(--bg)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:3px 12px;font-size:15px}
+.chip b{color:var(--pri)}
+.chip.cur{border-color:var(--pri);background:var(--pri);color:#fff}.chip.cur b{color:#fff}
+.turn{text-align:center;font-size:22px;font-weight:700;margin-bottom:6px}
+.badge{display:inline-block;background:var(--pri);color:#fff;border-radius:99px;padding:1px 12px;font-size:14px;margin-left:6px;vertical-align:middle}
+.wheelbox{position:relative;width:fit-content;margin:0 auto 12px}
+canvas{display:block;border-radius:50%;box-shadow:0 6px 0 rgba(0,0,0,.15)}
+.ptr{position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:34px solid #222;filter:drop-shadow(0 2px 0 #fff)}
+.spin{font-size:26px;padding:14px 44px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:5}
+.ov .card{max-width:520px;width:100%;text-align:center;max-height:90vh;overflow:auto;margin:0}
+.cat{display:inline-block;color:#fff;border-radius:99px;padding:2px 16px;font-weight:700;margin-bottom:8px}
+.q{font-size:24px;line-height:1.5;margin:8px 0}
+.ans{background:var(--bg);border:2px dashed var(--ok);border-radius:14px;padding:10px;margin:10px 0;font-size:20px}
+.ar{font-family:'Noto Naskh Arabic','Amiri',serif;font-size:1.6em;line-height:1.8;direction:rtl;unicode-bidi:isolate}
+.rank{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:14px;margin-bottom:6px;background:var(--bg);font-weight:700}
+.audio-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.audio-controls button{font:inherit;font-size:14px;font-weight:700;border:2px solid var(--line);border-radius:99px;padding:6px 12px;background:var(--card);color:var(--ink);cursor:pointer}
+.audio-controls button[aria-pressed="true"]{border-color:var(--pri)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="audio-controls" aria-label="Pengaturan audio">
+  <button id="sound-toggle" type="button" aria-label="Efek suara" aria-pressed="true">🔊 Suara: Aktif</button>
+  <button id="music-toggle" type="button" aria-label="Musik latar" aria-pressed="true">🎵 Musik: Aktif</button>
+</div>
+
+<!-- SETUP -->
+<section id="setup">
+  <h1>🎡 Roda Keberuntungan</h1>
+  <p class="sub">Isi nama peserta, pilih kelas, lalu putar rodanya!</p>
+  <div class="card">
+    <label class="t" for="names">Nama peserta (satu nama per baris)</label>
+    <textarea id="names" placeholder="Contoh:&#10;Aisyah&#10;Budi&#10;Citra"></textarea>
+  </div>
+  <div class="card">
+    <label class="t">Pilih kelas</label>
+    <div class="cls">
+      <button id="cSore" class="on"><b>🌇 Kelas Sore</b><small>Tingkat dasar</small></button>
+      <button id="cMalam"><b>🌙 Kelas Malam</b><small>Tingkat lanjut</small></button>
+    </div>
+  </div>
+  <div id="err" style="color:var(--bad);text-align:center;min-height:24px"></div>
+  <div class="row">
+    <button class="btn" id="go">Mulai Main 🎉</button>
+    <a class="btn ghost" href="/games%20sore.html" style="text-decoration:none">Kembali ke menu Games</a>
+  </div>
+</section>
+
+<!-- GAME -->
+<section id="game" class="hide">
+  <div class="chips" id="chips"></div>
+  <div class="turn">Giliran: <span id="who"></span><span class="badge" id="clsBadge"></span></div>
+  <div class="wheelbox"><div class="ptr"></div><canvas id="wheel"></canvas></div>
+  <div class="row">
+    <button class="btn spin" id="spin">PUTAR!</button>
+    <button class="btn ghost" id="finish">Selesai</button>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="result" class="hide">
+  <h1>🏆 Hasil Akhir</h1>
+  <div class="card" id="rank"></div>
+  <div class="row"><button class="btn" id="again">Main lagi (peserta sama)</button><button class="btn ghost" id="newGame">Ganti peserta</button></div>
+</section>
+
+</div>
+<div class="ov hide" id="ov"><div class="card" id="ovc"></div></div>
+
+<script src="/games/shared/audio.js"></script>
+<script>
+const CATS={
+ hij:{n:"Hijaiyah",s:"Hijaiyah",e:"🔤",c:"#e63946",p:10},
+ doa:{n:"Doa Harian",s:"Doa",e:"🤲",c:"#f77f00",p:10},
+ nabi:{n:"Nama Nabi",s:"Nabi",e:"⭐",c:"#e0a800",p:10},
+ adab:{n:"Adab Sehari-hari",s:"Adab",e:"🤝",c:"#2a9d8f",p:10},
+ baca:{n:"Tantangan Membaca",s:"Membaca",e:"📖",c:"#3a86ff",p:15},
+ rukun:{n:"Rukun Islam & Iman",s:"Rukun",e:"🕋",c:"#6a4c93",p:10},
+ surat:{n:"Surat Pendek",s:"Surat",e:"🌙",c:"#d6336c",p:10},
+ bonus:{n:"Bonus",s:"BONUS",e:"🎁",c:"#2b9348",p:20},
+ ulang:{n:"Putar Lagi",s:"Putar Lagi",e:"🔄",c:"#495057",p:0}
+};
+const SEG=["hij","doa","nabi","adab","baca","bonus","rukun","surat","hij","doa","ulang","baca"];
+
+const Q={
+sore:{
+ hij:[["Sebutkan nama huruf ini: <ar>ب</ar>","Ba"],["Sebutkan nama huruf ini: <ar>ج</ar>","Jim"],["Huruf apa setelah Alif?","Ba"],["Sebutkan nama huruf ini: <ar>م</ar>","Mim"],["Sebutkan nama huruf ini: <ar>ن</ar>","Nun"]],
+ doa:[["Apa yang diucapkan sebelum makan?","Bismillah"],["Apa yang diucapkan sesudah makan?","Alhamdulillah"],["Apa yang diucapkan saat bersin?","Alhamdulillah"],["Apa yang diucapkan saat mulai belajar?","Bismillah"]],
+ nabi:[["Siapa nabi pertama?","Nabi Adam a.s."],["Siapa nabi terakhir?","Nabi Muhammad saw."],["Nabi yang membuat kapal besar?","Nabi Nuh a.s."],["Nabi yang selamat dari api?","Nabi Ibrahim a.s."]],
+ adab:[["Tangan mana untuk makan dan minum?","Tangan kanan"],["Ucapan saat bertemu teman?","Assalamu’alaikum"],["Kaki mana yang lebih dulu masuk masjid?","Kaki kanan"],["Apa yang dilakukan sebelum masuk rumah orang?","Mengucap salam atau mengetuk pintu"]],
+ baca:[["Baca: <ar>بَ تَ ثَ</ar>","Ba Ta Tsa"],["Baca: <ar>دَ ذَ رَ</ar>","Da Dza Ra"],["Baca: <ar>بِسْمِ اللَّهِ</ar>","Bismillah"]],
+ rukun:[["Ada berapa rukun Islam?","5"],["Rukun Islam yang pertama?","Syahadat"],["Berapa kali shalat wajib dalam sehari?","5 kali"]],
+ surat:[["Lanjutkan: Qul huwallahu ahad…","Allahush shamad"],["Surat apa yang diawali “Qul huwallahu ahad”?","Al-Ikhlas"],["Surat Al-Ikhlas ada berapa ayat?","4 ayat"]]
+},
+malam:{
+ hij:[["Mana yang Tsa: <ar>ث</ar> atau <ar>س</ar>?","<ar>ث</ar> (titik tiga di atas)"],["Sebutkan nama huruf ini: <ar>ظ</ar>","Zha"],["Sebutkan 3 huruf yang bentuk dasarnya sama dengan Ba","Ba, Ta, Tsa"],["Baca: <ar>كَ كِ كُ</ar>","Ka Ki Ku"],["Bedakan: <ar>ص</ar> dan <ar>ض</ar>","Shad (tanpa titik) dan Dhad (bertitik)"]],
+ doa:[["Lafalkan doa sebelum tidur","Bismika Allahumma ahyaa wa bismika amuut"],["Lafalkan doa untuk kedua orang tua","Rabbighfir lii wa liwaalidayya warhamhumaa kamaa rabbayaanii shaghiiraa"],["Lafalkan doa sesudah makan","Alhamdulillahilladzi ath’amanaa wa saqaanaa wa ja’alanaa muslimiin"],["Lafalkan awal doa naik kendaraan","Subhaanalladzii sakhkhara lanaa haadzaa wa maa kunnaa lahu muqriniin"]],
+ nabi:[["Sebutkan 5 nabi ulul azmi","Nuh, Ibrahim, Musa, Isa, Muhammad"],["Nabi yang pernah ditelan ikan besar?","Nabi Yunus a.s."],["Nabi yang diberi kemampuan melunakkan besi?","Nabi Daud a.s."],["Nabi yang dapat memahami bahasa hewan dan memimpin jin?","Nabi Sulaiman a.s."]],
+ adab:[["Sebutkan 3 adab makan","Baca basmalah, tangan kanan, duduk sopan, tidak berlebihan"],["Bagaimana adab terhadap guru?","Mendengarkan, tidak memotong pembicaraan, bersikap sopan"],["Bagaimana adab saat bersin?","Menutup mulut dan mengucap Alhamdulillah; yang mendengar menjawab Yarhamukallah"],["Bagaimana adab berbicara kepada orang tua?","Lemah lembut dan tidak membentak"]],
+ baca:[["Baca: <ar>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</ar>","Bismillahirrahmanirrahim"],["Baca: <ar>الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</ar>","Alhamdulillahi rabbil ‘aalamiin"],["Baca: <ar>قُلْ هُوَ اللَّهُ أَحَدٌ</ar>","Qul huwallahu ahad"]],
+ rukun:[["Sebutkan 6 rukun iman","Allah, Malaikat, Kitab, Rasul, Hari Akhir, Qada dan Qadar"],["Sebutkan 5 rukun Islam","Syahadat, shalat, zakat, puasa Ramadan, haji"],["Sebutkan 4 malaikat dan tugasnya","Jibril (wahyu), Mikail (rezeki), Israfil (tiup sangkakala), Izrail (cabut nyawa)"]],
+ surat:[["Lanjutkan Al-Falaq: Qul a’uudzu birabbil falaq…","Min syarri maa khalaq"],["Lanjutkan Al-Kautsar: Innaa a’thainaakal kautsar…","Fashalli lirabbika wanhar"],["Lanjutkan An-Nas: Qul a’uudzu birabbin naas…","Malikin naas"]]
+}};
+
+const $=id=>document.getElementById(id);
+const arHtml=s=>s.replace(/<ar>(.*?)<\/ar>/g,'<span class="ar">$1</span>');
+const gameAudio=window.TPQGameAudio.create({
+  storageKey:'tpq-roda-audio',
+  soundButton:$('sound-toggle'),
+  musicButton:$('music-toggle'),
+  melody:[523.25,659.25,783.99,698.46,587.33,698.46,880,783.99]
+});
+let players=[],cls="sore",turn=0,rot=0,spinning=false,used={};
+
+function show(id){["setup","game","result"].forEach(s=>$(s).classList.toggle("hide",s!==id));window.scrollTo(0,0);}
+function pickCls(c){cls=c;$("cSore").classList.toggle("on",c==="sore");$("cMalam").classList.toggle("on",c==="malam");gameAudio.play("click");}
+$("cSore").onclick=()=>pickCls("sore");$("cMalam").onclick=()=>pickCls("malam");
+
+$("go").onclick=()=>{
+  const names=[...new Set($("names").value.split("\n").map(s=>s.trim()).filter(Boolean))].slice(0,30);
+  if(!names.length){$("err").textContent="Masukkan minimal satu nama peserta dulu ya.";return;}
+  $("err").textContent="";
+  gameAudio.unlock();gameAudio.startMusic();gameAudio.play("start");
+  players=names.map(n=>({n,s:0}));startGame();
+};
+function startGame(){
+  players.forEach(p=>p.s=0);turn=0;used={};
+  gameAudio.startMusic();
+  $("clsBadge").textContent=cls==="sore"?"🌇 Sore":"🌙 Malam";
+  show("game");sizeWheel();renderChips();
+}
+$("again").onclick=()=>{gameAudio.play("click");startGame();};
+$("newGame").onclick=()=>{gameAudio.stopMusic();show("setup");};
+$("finish").onclick=()=>{
+  if(spinning)return;
+  gameAudio.stopMusic();gameAudio.play("finish");
+  const r=players.slice().sort((a,b)=>b.s-a.s),med=["🥇","🥈","🥉"];
+  $("rank").innerHTML=r.map((p,i)=>`<div class="rank"><span>${med[i]||(i+1)+"."} ${esc(p.n)}</span><span>${p.s} poin</span></div>`).join("");
+  show("result");
+};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function renderChips(){
+  $("who").textContent=players[turn].n;
+  $("chips").innerHTML=players.map((p,i)=>`<span class="chip ${i===turn?"cur":""}">${esc(p.n)} <b>${p.s}</b></span>`).join("");
+}
+function nextTurn(){turn=(turn+1)%players.length;renderChips();}
+
+/* ---------- Roda ---------- */
+const cv=$("wheel"),ctx=cv.getContext("2d");let size=300;
+function sizeWheel(){
+  size=Math.min(window.innerWidth-40,420);const d=window.devicePixelRatio||1;
+  cv.style.width=cv.style.height=size+"px";cv.width=cv.height=Math.round(size*d);ctx.setTransform(d,0,0,d,0,0);draw();
+}
+window.addEventListener("resize",()=>{if(!$("game").classList.contains("hide"))sizeWheel();});
+function draw(){
+  const N=SEG.length,a=Math.PI*2/N,R=size/2,cx=R,cy=R;
+  ctx.clearRect(0,0,size,size);
+  for(let i=0;i<N;i++){
+    const k=CATS[SEG[i]],s=rot+i*a;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R-4,s,s+a);ctx.closePath();
+    ctx.fillStyle=k.c;ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(s+a/2);ctx.textAlign="right";ctx.fillStyle="#fff";
+    ctx.font="700 "+Math.round(size/26)+"px 'Baloo 2',sans-serif";ctx.fillText(k.s,R-size*0.1,size/70);
+    ctx.font=Math.round(size/22)+"px sans-serif";ctx.fillText(k.e,R-size*0.03,size/60);
+    ctx.restore();
+  }
+  ctx.beginPath();ctx.arc(cx,cy,size*0.07,0,7);ctx.fillStyle="#fff";ctx.fill();
+  ctx.lineWidth=4;ctx.strokeStyle="#222";ctx.stroke();
+}
+$("spin").onclick=()=>{
+  if(spinning)return;spinning=true;$("spin").disabled=true;
+  gameAudio.play("spin");
+  const start=rot,total=Math.PI*2*(5+Math.random()*3)+Math.random()*Math.PI*2,t0=performance.now(),D=5000;
+  (function f(t){
+    const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3);rot=start+total*e;draw();
+    if(k<1)requestAnimationFrame(f);else landed();
+  })(t0);
+};
+function landed(){
+  const N=SEG.length,a=Math.PI*2/N,T=Math.PI*2;
+  const ang=(((3*Math.PI/2-rot)%T)+T)%T,key=SEG[Math.floor(ang/a)%N];
+  spinning=false;$("spin").disabled=false;gameAudio.play("land");result(key);
+}
+
+/* ---------- Hasil putaran ---------- */
+function modal(html){$("ovc").innerHTML=html;$("ov").classList.remove("hide");}
+function close(){$("ov").classList.add("hide");}
+function result(key){
+  const k=CATS[key],p=players[turn];
+  if(key==="bonus"){
+    gameAudio.play("reward");
+    p.s+=k.p;
+    modal(`<span class="cat" style="background:${k.c}">${k.e} ${k.n}</span><div class="q">Selamat <b>${esc(p.n)}</b>! Dapat bonus <b>+${k.p} poin</b> 🎉</div><button class="btn" id="ok">Lanjut</button>`);
+    $("ok").onclick=()=>{close();nextTurn();};return;
+  }
+  if(key==="ulang"){
+    gameAudio.play("correct");
+    modal(`<span class="cat" style="background:${k.c}">${k.e} ${k.n}</span><div class="q"><b>${esc(p.n)}</b> boleh memutar sekali lagi!</div><button class="btn" id="ok">Oke</button>`);
+    $("ok").onclick=close;return;
+  }
+  const bank=Q[cls][key],u=used[cls+key]=used[cls+key]||[];
+  if(u.length>=bank.length)u.length=0;
+  let idx;do{idx=Math.floor(Math.random()*bank.length);}while(u.includes(idx));u.push(idx);
+  const [q,ans]=bank[idx];
+  gameAudio.play("click");
+  modal(`<span class="cat" style="background:${k.c}">${k.e} ${k.n}</span>
+    <div>Untuk <b>${esc(p.n)}</b> · <b>${k.p} poin</b></div>
+    <div class="q">${arHtml(q)}</div>
+    <div id="ansBox"></div>
+    <div class="row" id="acts"><button class="btn ghost" id="show">Lihat Jawaban</button></div>`);
+  $("show").onclick=()=>{
+    $("ansBox").innerHTML=`<div class="ans">${arHtml(ans)}</div>`;
+    $("acts").innerHTML=`<button class="btn ok" id="yes">✅ Benar</button><button class="btn bad" id="no">❌ Salah</button>`;
+    $("yes").onclick=()=>{gameAudio.play("correct");p.s+=k.p;close();nextTurn();};
+    $("no").onclick=()=>{gameAudio.play("wrong");close();nextTurn();};
+  };
+}
+</script>
+</body>
+</html>

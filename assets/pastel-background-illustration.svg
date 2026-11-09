@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 960" fill="none">
+  <style>
+    .cloud-drift {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: cloud-drift 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    .cloud-drift-slow {
+      animation-duration: 23s;
+      animation-delay: -11s;
+    }
+    .cloud-drift-fast {
+      animation-duration: 14s;
+      animation-delay: -5s;
+    }
+    @keyframes cloud-drift {
+      from { transform: translateX(-82px); }
+      to { transform: translateX(82px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cloud-drift { animation: none; }
+    }
+  </style>
+  <defs>
+    <linearGradient id="sky" x1="720" y1="0" x2="720" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DDF0FF"/>
+      <stop offset=".52" stop-color="#EEE9FF"/>
+      <stop offset="1" stop-color="#FFE7F1"/>
+    </linearGradient>
+    <linearGradient id="cloudTop" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fff"/>
+      <stop offset=".48" stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#DCEBFA"/>
+    </linearGradient>
+    <linearGradient id="cloudPink" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFF8FC"/>
+      <stop offset=".62" stop-color="#F8E8F4"/>
+      <stop offset="1" stop-color="#E8D8F2"/>
+    </linearGradient>
+    <linearGradient id="blueWall" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F8FCFF"/>
+      <stop offset=".55" stop-color="#D9ECFF"/>
+      <stop offset="1" stop-color="#AFC9EC"/>
+    </linearGradient>
+    <linearGradient id="pinkWall" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFF8FC"/>
+      <stop offset=".58" stop-color="#F5DDEA"/>
+      <stop offset="1" stop-color="#DDB9DA"/>
+    </linearGradient>
+    <linearGradient id="blueDome" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#D5EEFF"/>
+      <stop offset=".46" stop-color="#91C7EF"/>
+      <stop offset="1" stop-color="#668FCB"/>
+    </linearGradient>
+    <linearGradient id="pinkDome" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFE2F0"/>
+      <stop offset=".5" stop-color="#F1B5D5"/>
+      <stop offset="1" stop-color="#C988C5"/>
+    </linearGradient>
+    <linearGradient id="windowGlass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFF8DF"/>
+      <stop offset=".52" stop-color="#F4D398"/>
+      <stop offset="1" stop-color="#E6AD80"/>
+    </linearGradient>
+    <filter id="cloudShadow" x="-35%" y="-50%" width="170%" height="220%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9"/>
+      <feOffset dy="12"/>
+      <feColorMatrix values="0 0 0 0 .36 0 0 0 0 .47 0 0 0 0 .66 0 0 0 .2 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+    <pattern id="domeTiles" width="32" height="28" patternUnits="userSpaceOnUse">
+      <path d="M16 1 31 14 16 27 1 14 16 1Z" stroke="#fff" stroke-opacity=".48" stroke-width="2"/>
+      <circle cx="16" cy="14" r="3" fill="#fff" fill-opacity=".5"/>
+    </pattern>
+    <symbol id="smallMosque" viewBox="0 0 300 320">
+      <ellipse cx="150" cy="307" rx="145" ry="12" fill="#8498C7" fill-opacity=".18"/>
+      <path d="M18 300V159c0-12 10-22 22-22h220c12 0 22 10 22 22v141H18Z" fill="url(#blueWall)" stroke="#fff" stroke-opacity=".75" stroke-width="5"/>
+      <path d="M18 163h264v11H18z" fill="#8EA9D7" fill-opacity=".55"/>
+      <path d="M105 300v-73c0-25 20-45 45-45s45 20 45 45v73h-90Z" fill="#7894CA"/>
+      <path d="M114 300v-70c0-20 16-36 36-36s36 16 36 36v70h-72Z" fill="#F2F7FF"/>
+      <path d="M126 300v-43c0-13 11-24 24-24s24 11 24 24v43h-48Z" fill="url(#windowGlass)" stroke="#fff" stroke-opacity=".8" stroke-width="4"/>
+      <path d="M35 300v-68c0-15 12-27 27-27s27 12 27 27v68H35Zm176 0v-68c0-15 12-27 27-27s27 12 27 27v68h-54Z" fill="#8DA8D7"/>
+      <path d="M43 300v-66c0-11 9-20 19-20s19 9 19 20v66H43Zm176 0v-66c0-11 9-20 19-20s19 9 19 20v66h-38Z" fill="url(#windowGlass)" stroke="#fff" stroke-opacity=".75" stroke-width="4"/>
+      <path d="M74 140c0-72 31-123 76-123s76 51 76 123H74Z" fill="url(#blueDome)" stroke="#fff" stroke-opacity=".82" stroke-width="5"/>
+      <path d="M84 139c12-48 35-82 66-82s54 34 66 82H84Z" fill="url(#domeTiles)" opacity=".58"/>
+      <path d="M77 164c0-40 18-68 42-68s42 28 42 68H77Z" fill="url(#pinkDome)" stroke="#fff" stroke-opacity=".78" stroke-width="4"/>
+      <path d="M139 164c0-40 18-68 42-68s42 28 42 68h-84Z" fill="url(#pinkDome)" stroke="#fff" stroke-opacity=".78" stroke-width="4"/>
+      <path d="M144 18c0-8 4-16 9-22 6 6 9 14 9 22m-9-22V3" stroke="#D8B777" stroke-width="4" stroke-linecap="round"/>
+      <path d="M0 300V85c0-9 7-16 16-16h18c9 0 16 7 16 16v215H0Z" fill="url(#blueWall)" stroke="#fff" stroke-opacity=".8" stroke-width="4"/>
+      <path d="M-5 91h60v9H-5z" fill="#F7DDEB"/>
+      <path d="M5 69c0-37 14-61 27-76 14 15 27 39 27 76H5Z" fill="url(#pinkDome)" stroke="#fff" stroke-opacity=".84" stroke-width="4"/>
+      <path d="M14 68c5-23 11-39 18-50 8 11 14 27 19 50H14Z" fill="url(#domeTiles)" opacity=".56"/>
+      <path d="M9 143h35m-35 77h35" stroke="#fff" stroke-opacity=".68" stroke-width="5"/>
+      <path d="M14 112h25v19H14zm0 77h25v19H14z" fill="url(#windowGlass)" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+      <path d="M250 300V85c0-9 7-16 16-16h18c9 0 16 7 16 16v215h-50Z" fill="url(#pinkWall)" stroke="#fff" stroke-opacity=".8" stroke-width="4"/>
+      <path d="M245 91h60v9h-60z" fill="#D9E6FA"/>
+      <path d="M245 69c0-37 14-61 27-76 14 15 27 39 27 76h-54Z" fill="url(#blueDome)" stroke="#fff" stroke-opacity=".84" stroke-width="4"/>
+      <path d="M254 68c5-23 11-39 18-50 8 11 14 27 19 50h-37Z" fill="url(#domeTiles)" opacity=".56"/>
+      <path d="M256 143h35m-35 77h35" stroke="#fff" stroke-opacity=".68" stroke-width="5"/>
+      <path d="M261 112h25v19h-25zm0 77h25v19h-25z" fill="url(#windowGlass)" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+    </symbol>
+    <symbol id="softCloud" viewBox="0 0 260 130">
+      <ellipse cx="130" cy="106" rx="112" ry="15" fill="#AFC5E3" fill-opacity=".26"/>
+      <circle cx="63" cy="76" r="37" fill="url(#cloudPink)"/>
+      <circle cx="105" cy="57" r="49" fill="url(#cloudTop)"/>
+      <circle cx="158" cy="66" r="45" fill="url(#cloudTop)"/>
+      <circle cx="198" cy="78" r="31" fill="url(#cloudPink)"/>
+      <rect x="39" y="75" width="181" height="37" rx="18.5" fill="url(#cloudTop)"/>
+      <path d="M77 72c8-24 26-37 47-37 20 0 37 11 46 30" stroke="#fff" stroke-opacity=".62" stroke-width="7" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1440v960H0z"/>
+
+  <g class="cloud-drift cloud-drift-slow" filter="url(#cloudShadow)" opacity=".96">
+    <ellipse cx="235" cy="206" rx="140" ry="30" fill="#C5D8F0" fill-opacity=".45"/>
+    <circle cx="161" cy="183" r="43" fill="url(#cloudTop)"/>
+    <circle cx="216" cy="155" r="66" fill="url(#cloudTop)"/>
+    <circle cx="277" cy="177" r="52" fill="url(#cloudTop)"/>
+    <circle cx="322" cy="187" r="31" fill="url(#cloudPink)"/>
+    <rect x="139" y="178" width="204" height="42" rx="21" fill="url(#cloudTop)"/>
+    <path d="M176 179c8-29 29-45 54-45 26 0 44 14 54 38" stroke="#fff" stroke-opacity=".7" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g class="cloud-drift cloud-drift-fast" filter="url(#cloudShadow)" opacity=".92">
+    <ellipse cx="1115" cy="324" rx="128" ry="26" fill="#C5D8F0" fill-opacity=".43"/>
+    <circle cx="1047" cy="303" r="38" fill="url(#cloudPink)"/>
+    <circle cx="1095" cy="278" r="58" fill="url(#cloudTop)"/>
+    <circle cx="1150" cy="298" r="47" fill="url(#cloudTop)"/>
+    <circle cx="1195" cy="310" r="29" fill="url(#cloudPink)"/>
+    <rect x="1023" y="300" width="194" height="38" rx="19" fill="url(#cloudTop)"/>
+    <path d="M1056 299c8-24 25-38 47-38 20 0 36 11 45 30" stroke="#fff" stroke-opacity=".65" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g class="cloud-drift" filter="url(#cloudShadow)" opacity=".78">
+    <ellipse cx="700" cy="198" rx="80" ry="18" fill="#C5D8F0" fill-opacity=".35"/>
+    <circle cx="658" cy="184" r="25" fill="url(#cloudPink)"/>
+    <circle cx="690" cy="167" r="39" fill="url(#cloudTop)"/>
+    <circle cx="728" cy="182" r="30" fill="url(#cloudTop)"/>
+    <rect x="643" y="182" width="111" height="27" rx="14" fill="url(#cloudTop)"/>
+  </g>
+  <g class="cloud-drift cloud-drift-slow" filter="url(#cloudShadow)" opacity=".74">
+    <ellipse cx="425" cy="388" rx="98" ry="20" fill="#C5D8F0" fill-opacity=".35"/>
+    <circle cx="374" cy="370" r="30" fill="url(#cloudTop)"/>
+    <circle cx="414" cy="350" r="45" fill="url(#cloudTop)"/>
+    <circle cx="460" cy="370" r="34" fill="url(#cloudPink)"/>
+    <rect x="354" y="370" width="135" height="30" rx="15" fill="url(#cloudTop)"/>
+  </g>
+  <g class="cloud-drift cloud-drift-fast" filter="url(#cloudShadow)" opacity=".76">
+    <ellipse cx="942" cy="449" rx="95" ry="19" fill="#C5D8F0" fill-opacity=".34"/>
+    <circle cx="894" cy="432" r="28" fill="url(#cloudPink)"/>
+    <circle cx="933" cy="411" r="43" fill="url(#cloudTop)"/>
+    <circle cx="977" cy="433" r="33" fill="url(#cloudTop)"/>
+    <rect x="875" y="432" width="132" height="30" rx="15" fill="url(#cloudTop)"/>
+  </g>
+  <g class="cloud-drift" filter="url(#cloudShadow)" opacity=".66">
+    <ellipse cx="165" cy="512" rx="90" ry="18" fill="#C5D8F0" fill-opacity=".32"/>
+    <circle cx="119" cy="497" r="27" fill="url(#cloudPink)"/>
+    <circle cx="157" cy="478" r="41" fill="url(#cloudTop)"/>
+    <circle cx="199" cy="498" r="31" fill="url(#cloudTop)"/>
+    <rect x="101" y="497" width="124" height="28" rx="14" fill="url(#cloudTop)"/>
+  </g>
+
+  <g class="cloud-drift cloud-drift-fast" filter="url(#cloudShadow)" opacity=".64">
+    <use href="#softCloud" x="40" y="552" width="250" height="125"/>
+  </g>
+  <g class="cloud-drift cloud-drift-slow" filter="url(#cloudShadow)" opacity=".7">
+    <use href="#softCloud" x="492" y="540" width="285" height="143"/>
+  </g>
+  <g class="cloud-drift" filter="url(#cloudShadow)" opacity=".63">
+    <use href="#softCloud" x="1045" y="555" width="270" height="135"/>
+  </g>
+  <g class="cloud-drift cloud-drift-slow" filter="url(#cloudShadow)" opacity=".69">
+    <use href="#softCloud" x="230" y="655" width="300" height="150"/>
+  </g>
+  <g class="cloud-drift cloud-drift-fast" filter="url(#cloudShadow)" opacity=".66">
+    <use href="#softCloud" x="790" y="660" width="280" height="140"/>
+  </g>
+  <g class="cloud-drift" filter="url(#cloudShadow)" opacity=".7">
+    <use href="#softCloud" x="-35" y="755" width="300" height="150"/>
+  </g>
+  <g class="cloud-drift cloud-drift-fast" filter="url(#cloudShadow)" opacity=".72">
+    <use href="#softCloud" x="460" y="750" width="300" height="150"/>
+  </g>
+  <g class="cloud-drift cloud-drift-slow" filter="url(#cloudShadow)" opacity=".66">
+    <use href="#softCloud" x="1010" y="755" width="300" height="150"/>
+  </g>
+  <g class="cloud-drift" filter="url(#cloudShadow)" opacity=".76">
+    <use href="#softCloud" x="175" y="855" width="320" height="160"/>
+  </g>
+  <g class="cloud-drift cloud-drift-fast" filter="url(#cloudShadow)" opacity=".74">
+    <use href="#softCloud" x="720" y="845" width="330" height="165"/>
+  </g>
+  <g class="cloud-drift cloud-drift-slow" filter="url(#cloudShadow)" opacity=".72">
+    <use href="#softCloud" x="1170" y="865" width="300" height="150"/>
+  </g>
+
+  <path d="M0 843c234-60 466-62 720-18 262 46 480 25 720-47v182H0V843Z" fill="#D8E9FA" fill-opacity=".28"/>
+  <g opacity=".23">
+    <use href="#smallMosque" x="-18" y="648" width="300" height="320"/>
+    <use href="#smallMosque" x="265" y="662" width="280" height="299"/>
+    <use href="#smallMosque" x="531" y="630" width="318" height="340"/>
+    <use href="#smallMosque" x="836" y="659" width="282" height="301"/>
+    <use href="#smallMosque" x="1104" y="638" width="302" height="322"/>
+  </g>
+</svg>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sambung Ayat Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef7ee;--card:#fff;--ink:#17331f;--mute:#5b7a63;--pri:#1f7a4d;--pri2:#16603a;--ok:#2fa84f;--okbg:#dff5e5;--bad:#d9534f;--badbg:#fde6e5;--gold:#2fa84f;--line:#cfe6d3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f2016;--card:#173323;--ink:#eaf7ee;--mute:#a3c4ab;--pri:#3fbf7f;--pri2:#2fa86a;--ok:#4cc46d;--okbg:#17432b;--bad:#ef7773;--badbg:#44211f;--line:#2b5238}}
+:root[data-theme="dark"]{--bg:#0f2016;--card:#173323;--ink:#eaf7ee;--mute:#a3c4ab;--pri:#3fbf7f;--pri2:#2fa86a;--ok:#4cc46d;--okbg:#17432b;--bad:#ef7773;--badbg:#44211f;--line:#2b5238}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;font-size:17px;min-height:100vh}
+.wrap{max-width:620px;margin:0 auto;padding:16px}
+h1{font-size:28px;margin:6px 0 2px;text-align:center}
+.sub{text-align:center;color:var(--mute);margin:0 0 14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
+label.t{font-weight:700;display:block;margin-bottom:6px}
+textarea,input{width:100%;border:2px solid var(--line);border-radius:14px;padding:10px;font:inherit;background:var(--bg);color:var(--ink)}
+textarea{min-height:100px;resize:vertical}
+.btn{font:inherit;font-weight:700;border:0;border-radius:16px;padding:12px 22px;background:var(--pri);color:#fff;cursor:pointer;font-size:18px}
+.btn:hover:not(:disabled){background:var(--pri2)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.seg{display:grid;gap:10px}.seg.c2{grid-template-columns:1fr 1fr}
+.seg button{font:inherit;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:10px;cursor:pointer;text-align:center}
+.seg button b{display:block;font-size:18px}.seg button small{color:var(--mute);line-height:1.2;display:block}
+.seg button.on{border-color:var(--pri);background:var(--bg)}
+.note{font-size:13px;color:var(--mute);text-align:center;margin-top:8px}
+.top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px;gap:8px;flex-wrap:wrap}
+.bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--gold));transition:width .3s}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:1px 12px;font-size:15px}
+.chip b{color:var(--pri)}.chip.cur{background:var(--pri);color:#fff;border-color:var(--pri)}.chip.cur b{color:#fff}
+.ar{font-family:'Noto Naskh Arabic','Amiri',serif;direction:rtl;font-size:30px;line-height:2.1;text-align:center}
+.q{text-align:center}
+.q .lab{color:var(--mute);font-size:15px}
+.pbox{background:var(--bg);border-radius:16px;padding:8px 10px;margin:6px 0 10px}
+.opts{display:grid;gap:10px}
+.opt{border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:4px 10px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok,.slot.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad,.slot.bad{background:var(--badbg);border-color:var(--bad);animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.line{direction:rtl;text-align:center}
+.slot{display:inline-block;min-width:84px;min-height:54px;border:3px dashed var(--pri);border-radius:12px;background:var(--card);color:var(--ink);font-family:'Noto Naskh Arabic',serif;font-size:30px;line-height:1.6;padding:0 8px;margin:0 3px;cursor:pointer;vertical-align:middle}
+.slot.filled{border-style:solid}
+.bank{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.bank button{font-family:'Noto Naskh Arabic',serif;font-size:28px;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:2px 14px;cursor:pointer;direction:rtl}
+.bank button:disabled{opacity:.35;cursor:default}
+.fb{min-height:30px;text-align:center;font-weight:700;margin:8px 0;font-size:18px}
+.hide{display:none}
+.rank{display:flex;justify-content:space-between;padding:8px 12px;border-radius:14px;margin-bottom:6px;background:var(--bg);font-weight:700}
+.stars{font-size:46px;text-align:center;letter-spacing:6px}
+.audio-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.audio-controls button{font:inherit;font-size:14px;font-weight:700;border:2px solid var(--line);border-radius:99px;padding:6px 12px;background:var(--card);color:var(--ink);cursor:pointer}
+.audio-controls button[aria-pressed="true"]{border-color:var(--pri)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="audio-controls" aria-label="Pengaturan audio">
+  <button id="sound-toggle" type="button" aria-label="Efek suara" aria-pressed="true">🔊 Suara: Aktif</button>
+  <button id="music-toggle" type="button" aria-label="Musik latar" aria-pressed="true">🎵 Musik: Aktif</button>
+</div>
+
+<section id="setup">
+  <h1>📖 Sambung Ayat Challenge</h1>
+  <p class="sub">Juz 30 · Lanjutkan ayatnya dengan tepat!</p>
+  <div class="card"><label class="t">Kelas</label>
+    <div class="seg c2">
+      <button data-k="cls" data-v="sore" class="on"><b>🌇 Kelas Sore</b><small>Soal lebih mudah</small></button>
+      <button data-k="cls" data-v="malam"><b>🌙 Kelas Malam</b><small>Soal lebih menantang</small></button>
+    </div>
+    <div class="note" id="surahNote"></div>
+  </div>
+  <div class="card"><label class="t">Mode</label>
+    <div class="seg c2">
+      <button data-k="mode" data-v="ind" class="on"><b>🧒 Individu</b><small>Bermain sendiri</small></button>
+      <button data-k="mode" data-v="grp"><b>👥 Kelompok</b><small>Bergiliran antar tim</small></button>
+    </div>
+    <label class="t" id="nameLab" style="margin-top:12px">Nama santri</label>
+    <input id="nameOne" placeholder="Contoh: Aisyah">
+    <textarea id="nameTeams" class="hide" placeholder="Nama kelompok, satu per baris (2–6)&#10;Contoh:&#10;Tim Bintang&#10;Tim Bulan"></textarea>
+  </div>
+  <div class="card"><label class="t">Level</label>
+    <div class="seg">
+      <button data-k="lv" data-v="1" class="on"><b>⭐ Mudah · Lanjutkan Surah Pendek</b><small>Pilih ayat lanjutan dari nama surah yang diberikan (10 poin)</small></button>
+      <button data-k="lv" data-v="2"><b>⭐⭐ Sedang · Pilih Ayat Berikutnya</b><small>Pilihan lebih mirip, ayat sama-sama dari juz 30 (15 poin)</small></button>
+      <button data-k="lv" data-v="3"><b>⭐⭐⭐ Sulit · Lengkapi Ayat</b><small>Isi kata yang dikosongkan (20 poin)</small></button>
+    </div>
+  </div>
+  <div id="err" style="color:var(--bad);text-align:center;min-height:24px"></div>
+  <div class="row">
+    <button class="btn" id="go">Mulai 🚀</button>
+    <a class="btn ghost" id="back-to-games" href="/games%20sore.html" style="text-decoration:none">Kembali ke menu Games</a>
+  </div>
+  <div class="note">Teks ayat disalin dari sumber Al-Qur’an digital (surahquran.com dan quranpedia.net). Guru tetap perlu mencocokkannya dengan mushaf sebelum dipakai.</div>
+</section>
+
+<section id="game" class="hide">
+  <div class="top"><span id="gInfo"></span><span id="gNo"></span></div>
+  <div class="bar"><i id="gBar"></i></div>
+  <div class="chips" id="chips"></div>
+  <div class="card q">
+    <div class="lab" id="turn"></div>
+    <div class="lab" id="gName"></div>
+    <div id="qBody"></div>
+    <div class="fb" id="fb"></div>
+    <div class="row"><button class="btn hide" id="next">Lanjut ▶</button></div>
+  </div>
+  <div class="row"><button class="btn ghost" id="quit">Keluar</button></div>
+</section>
+
+<section id="result" class="hide">
+  <h1 id="rTitle">Selesai! 🎉</h1>
+  <div class="card"><div class="stars" id="rStars"></div><div id="rBody" style="margin-top:10px"></div></div>
+  <div class="row"><button class="btn" id="again">Main lagi</button><button class="btn ghost" id="toSetup">Menu awal</button></div>
+</section>
+</div>
+
+<script src="/games/shared/audio.js"></script>
+<script>
+/* Teks ayat: QS. 109–114 (Juz 30), disalin dari surahquran.com dan quranpedia.net */
+const S=[
+{id:109,n:"Al-Kafirun",a:["قُلْ يَا أَيُّهَا الْكَافِرُونَ","لَا أَعْبُدُ مَا تَعْبُدُونَ","وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ","وَلَا أَنَا عَابِدٌ مَا عَبَدْتُمْ","وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ","لَكُمْ دِينُكُمْ وَلِيَ دِينِ"]},
+{id:110,n:"An-Nasr",a:["إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ","وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا","فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا"]},
+{id:111,n:"Al-Lahab (Al-Masad)",a:["تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ","مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ","سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ","وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ","فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ"]},
+{id:112,n:"Al-Ikhlas",a:["قُلْ هُوَ اللَّهُ أَحَدٌ","اللَّهُ الصَّمَدُ","لَمْ يَلِدْ وَلَمْ يُولَدْ","وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ"]},
+{id:113,n:"Al-Falaq",a:["قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ","مِن شَرِّ مَا خَلَقَ","وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ","وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ"]},
+{id:114,n:"An-Nas",a:["قُلْ أَعُوذُ بِرَبِّ النَّاسِ","مَلِكِ النَّاسِ","إِلَٰهِ النَّاسِ","مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ","الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ","مِنَ الْجِنَّةِ وَالنَّاسِ"]}
+];
+const SORE=[112,114,110,113],PTS=[0,10,15,20];
+const $=id=>document.getElementById(id);
+const gameAudio=window.TPQGameAudio.create({
+  storageKey:"tpq-sambung-ayat-audio",
+  soundButton:$("sound-toggle"),
+  musicButton:$("music-toggle"),
+  melody:[523.25,587.33,698.46,783.99,698.46,659.25,587.33,523.25]
+});
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const strip=w=>w.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,"");
+const words=s=>{const r=[];s.split(" ").forEach(t=>{if(/^[\u06D6-\u06DC]+$/.test(t)&&r.length)r[r.length-1]+=" "+t;else if(t)r.push(t);});return r;};
+
+const initialClass=new URLSearchParams(location.search).get("kelas");
+let cfg={cls:initialClass==="malam"?"malam":"sore",mode:"ind",lv:"1"},teams=[],Q=[],qi=0,cur=null,att=0,locked=false,right=0;
+
+/* ---------- Setup ---------- */
+function pool(){return S.filter(s=>cfg.cls==="malam"||SORE.includes(s.id));}
+function note(){$("surahNote").textContent="Surah yang dipakai: "+pool().map(s=>s.n).join(", ");}
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{
+  gameAudio.play("click");
+  cfg[b.dataset.k]=b.dataset.v;
+  b.parentElement.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  if(b.dataset.k==="cls")$("back-to-games").href=cfg.cls==="malam"?"/games%20malam.html":"/games%20sore.html";
+  $("nameOne").classList.toggle("hide",cfg.mode==="grp");$("nameTeams").classList.toggle("hide",cfg.mode!=="grp");
+  $("nameLab").textContent=cfg.mode==="grp"?"Nama kelompok":"Nama santri";note();
+});
+document.querySelectorAll('.seg button[data-k="cls"]').forEach(b=>b.classList.toggle("on",b.dataset.v===cfg.cls));
+$("back-to-games").href=cfg.cls==="malam"?"/games%20malam.html":"/games%20sore.html";
+note();
+function show(id){["setup","game","result"].forEach(s=>$(s).classList.toggle("hide",s!==id));if(id!=="game")gameAudio.stopMusic();window.scrollTo(0,0);}
+$("go").onclick=()=>{
+  if(cfg.mode==="grp"){
+    const n=[...new Set($("nameTeams").value.split("\n").map(s=>s.trim()).filter(Boolean))].slice(0,6);
+    if(n.length<2){$("err").textContent="Isi minimal 2 nama kelompok.";return;}
+    teams=n.map(x=>({n:x,s:0}));
+  }else teams=[{n:$("nameOne").value.trim()||"Santri",s:0}];
+  $("err").textContent="";gameAudio.unlock();gameAudio.startMusic();gameAudio.play("start");start();
+};
+$("again").onclick=()=>{gameAudio.play("click");start();};$("toSetup").onclick=()=>{gameAudio.play("click");show("setup");};
+$("quit").onclick=()=>{if(confirm("Keluar dari permainan?")){gameAudio.stopMusic();gameAudio.play("click");show("setup");}};
+
+/* ---------- Pembuat soal ---------- */
+const allAyat=ps=>ps.flatMap(s=>s.a.map(t=>({t,s})));
+function choiceQ(s,k,ps,n,hide){
+  const rightT=s.a[k+1];
+  let ds=cfg.lv==="2"?sh(s.a.filter((t,i)=>i!==k&&i!==k+1)):[];
+  ds=ds.concat(sh(allAyat(ps.filter(p=>p!==s)).map(x=>x.t)))
+    .filter((t,i,a)=>t!==rightT&&t!==s.a[k]&&a.indexOf(t)===i).slice(0,n-1);
+  const opts=sh([rightT].concat(ds));
+  return{type:"c",prompt:s.a[k],name:(cfg.lv==="1"||!hide)?s.n:null,opts,ans:opts.indexOf(rightT),ref:"QS. "+s.n+" ayat "+(k+2),full:rightT};
+}
+function blankQ(s,k,ps,hide){
+  const w=words(s.a[k]),nb=hide?2:1;
+  let ok=w.map((x,i)=>strip(x).length>=3?i:-1).filter(i=>i>=0);
+  if(ok.length<nb)ok=w.map((_,i)=>i);
+  let b;
+  if(nb===1)b=[ok[Math.floor(Math.random()*ok.length)]];
+  else{const c=sh(ok);const far=c.slice(1).find(i=>Math.abs(i-c[0])>1);b=[c[0],far!==undefined?far:c[1]].sort((x,y)=>x-y);}
+  const pw=[...new Set(allAyat(ps).flatMap(x=>words(x.t)))].filter(x=>!w.includes(x));
+  const bank=sh(b.map(i=>w[i]).concat(sh(pw).slice(0,hide?3:2)));
+  return{type:"b",w,b,bank,name:hide?null:s.n,ref:"QS. "+s.n+" ayat "+(k+1),full:s.a[k]};
+}
+function makeQs(){
+  const ps=pool(),hide=cfg.cls==="malam",N=hide?10:8,n=hide?4:3,c=[];
+  ps.forEach(s=>s.a.forEach((t,k)=>{
+    if(cfg.lv!=="3"){if(k<s.a.length-1&&s.a.filter(x=>x===t).length===1)c.push([s,k]);}
+    else if(words(t).length>=(hide?4:3))c.push([s,k]);
+  }));
+  let o=[];while(o.length<N)o=o.concat(sh(c));
+  return o.slice(0,N).map(([s,k])=>cfg.lv!=="3"?choiceQ(s,k,ps,n,hide):blankQ(s,k,ps,hide));
+}
+
+/* ---------- Game ---------- */
+function start(){
+  gameAudio.startMusic();
+  teams.forEach(t=>t.s=0);Q=makeQs();qi=0;right=0;
+  $("gInfo").textContent=(cfg.cls==="sore"?"🌇 Sore":"🌙 Malam")+" · "+["","Mudah","Sedang","Sulit"][+cfg.lv];
+  show("game");ask();
+}
+function who(){return teams[qi%teams.length];}
+function chips(){$("chips").innerHTML=teams.map(t=>`<span class="chip ${t===who()?"cur":""}">${esc(t.n)} <b>${t.s}</b></span>`).join("");}
+function ask(){
+  cur=Q[qi];att=0;locked=false;
+  $("gNo").textContent="Soal "+(qi+1)+"/"+Q.length;$("gBar").style.width=(qi/Q.length*100)+"%";
+  $("fb").textContent="";$("next").classList.add("hide");chips();
+  $("turn").textContent=teams.length>1?"Giliran: "+who().n:"";
+  $("gName").textContent=cur.name?"Surah "+cur.name:"Surah apa ini? 🤔";
+  if(cur.type==="c"){
+    $("qBody").innerHTML=`<div class="lab">Ayat ini… lanjutannya?</div><div class="pbox ar">${cur.prompt}</div><div class="opts" id="opts"></div>`;
+    cur.opts.forEach((t,i)=>{const b=document.createElement("button");b.className="opt ar";b.textContent=t;b.onclick=()=>pickC(b,i);$("opts").appendChild(b);});
+  }else{
+    cur.fill=cur.b.map(()=>-1);
+    $("qBody").innerHTML=`<div class="lab">Lengkapi bagian yang kosong</div><div class="pbox line" id="line"></div><div class="bank" id="bank"></div><div class="row"><button class="btn" id="chk" disabled>Periksa</button></div>`;
+    drawB();$("chk").onclick=checkB;
+  }
+}
+function drawB(){
+  const slots=cur.b;let h="";
+  cur.w.forEach((x,i)=>{const s=slots.indexOf(i);
+    h+=s<0?`<span class="ar" style="font-size:30px"> ${x} </span>`:`<button class="slot ${cur.fill[s]>=0?"filled":""} ${cur.mark||""}" data-s="${s}">${cur.fill[s]>=0?cur.bank[cur.fill[s]]:"؟"}</button>`;});
+  $("line").innerHTML=h;
+  $("bank").innerHTML=cur.bank.map((x,i)=>`<button data-i="${i}" ${cur.fill.includes(i)||locked?"disabled":""}>${x}</button>`).join("");
+  $("line").querySelectorAll(".slot").forEach(b=>b.onclick=()=>{if(locked)return;gameAudio.play("click");cur.fill[+b.dataset.s]=-1;cur.mark="";drawB();});
+  $("bank").querySelectorAll("button").forEach(b=>b.onclick=()=>{const f=cur.fill.indexOf(-1);if(f<0)return;gameAudio.play("click");cur.fill[f]=+b.dataset.i;cur.mark="";drawB();});
+  $("chk").disabled=locked||cur.fill.includes(-1);
+}
+function award(){
+  gameAudio.play("correct");
+  const base=PTS[+cfg.lv],p=att===0?base:Math.round(base/2);
+  who().s+=p;right++;
+  $("fb").style.color="var(--ok)";
+  $("fb").textContent="Masya Allah, benar! +"+p+" poin 🌟";
+}
+function finishQ(good){
+  locked=true;chips();
+  if(!good){$("fb").style.color="var(--bad)";$("fb").innerHTML="Jawaban yang benar ada di atas. "+esc(cur.ref);}
+  else $("fb").textContent+=" ("+cur.ref+")";
+  $("next").textContent=qi+1>=Q.length?"Lihat Hasil 🏆":"Lanjut ▶";$("next").classList.remove("hide");
+}
+function pickC(btn,i){
+  if(locked)return;
+  const bs=[...$("opts").children];
+  if(i===cur.ans){btn.classList.add("ok");bs.forEach(b=>b.disabled=true);award();finishQ(true);return;}
+  gameAudio.play("wrong");
+  att++;btn.classList.add("bad");btn.disabled=true;
+  if(teams.length>1||att>=2){bs.forEach(b=>b.disabled=true);bs[cur.ans].classList.add("ok");finishQ(false);}
+  else{$("fb").style.color="var(--bad)";$("fb").textContent="Belum tepat. Coba sekali lagi (poin setengah).";}
+}
+function checkB(){
+  if(locked)return;
+  const ok=cur.b.every((wi,s)=>cur.bank[cur.fill[s]]===cur.w[wi]);
+  if(ok){cur.mark="ok";locked=true;drawB();award();finishQ(true);return;}
+  gameAudio.play("wrong");
+  att++;cur.mark="bad";drawB();
+  if(teams.length>1||att>=2){
+    locked=true;cur.fill=cur.b.map(wi=>{let j=cur.bank.findIndex((x,i)=>x===cur.w[wi]&&!cur._u?.includes(i));(cur._u=cur._u||[]).push(j);return j;});
+    cur.mark="ok";drawB();finishQ(false);
+  }else{
+    $("fb").style.color="var(--bad)";$("fb").textContent="Belum tepat. Coba sekali lagi (poin setengah).";
+    setTimeout(()=>{cur.fill=cur.b.map(()=>-1);cur.mark="";drawB();},700);
+  }
+}
+$("next").onclick=()=>{gameAudio.play("click");qi++;qi>=Q.length?done():ask();};
+
+/* ---------- Hasil ---------- */
+function done(){
+  gameAudio.stopMusic();gameAudio.play("reward");
+  const med=["🥇","🥈","🥉"];
+  if(teams.length>1){
+    const r=teams.slice().sort((a,b)=>b.s-a.s);
+    $("rStars").textContent="🏆";
+    $("rBody").innerHTML=r.map((t,i)=>`<div class="rank"><span>${med[i]||(i+1)+"."} ${esc(t.n)}</span><span>${t.s} poin</span></div>`).join("");
+  }else{
+    const p=right/Q.length,st=p>=.9?3:p>=.7?2:p>=.5?1:0;
+    $("rStars").textContent="⭐".repeat(st)+"☆".repeat(3-st);
+    $("rBody").innerHTML=`<div class="rank"><span>${esc(teams[0].n)}</span><span>${teams[0].s} poin</span></div><div class="rank"><span>Jawaban benar</span><span>${right}/${Q.length}</span></div>`;
+  }
+  show("result");
+}
+</script>
+</body>
+</html>
