@@ -570,3 +570,26 @@ header.login-single-header{position:relative;z-index:1;display:flex;align-items:
 @media(max-width:620px){.games-hero{min-height:170px;gap:8px;margin:12px 14px 0;padding:18px 16px;border-radius:20px}.games-hero-copy{max-width:65%}.games-hero-copy h2{font-size:22px}.games-hero-copy p{font-size:12px}.games-hero-chips{gap:5px;margin-top:9px}.games-hero-chips span{padding:5px 7px;font-size:9px}.games-hero-art{flex:0 0 36%;margin-right:-12px}.games-hero-art img{height:150px}.games-hero-star-one{left:2%;font-size:22px}.games-hero-star-two{right:1%;font-size:19px}.games-choice-panel,.games-detail-panel{padding:15px;border-radius:18px}.game-choice{min-height:76px;padding:10px;border-radius:16px}.game-choice-icon{flex-basis:48px;width:48px;height:48px;border-radius:16px;font-size:24px}.game-choice-tag{font-size:9px;padding:5px 7px}.games-preview{min-height:180px}}
 @media(max-width:380px){.games-hero-copy{max-width:68%}.games-hero-copy h2{font-size:20px}.games-hero-chips span{font-size:8px}.games-hero-art img{height:130px}}
 @media(prefers-reduced-motion:reduce){.games-hero-art img,.games-hero-star,.game-choice-icon,.games-preview-icon{animation:none;transition:none}}
+
+@view-transition{navigation:auto}
+::view-transition-group(root){animation-duration:.48s}
+::view-transition-old(root){animation:page-shutter-close .28s cubic-bezier(.4,0,.7,.2) both;transform-origin:left center;backface-visibility:hidden}
+::view-transition-new(root){animation:page-shutter-open .48s cubic-bezier(.2,.8,.2,1) both;transform-origin:right center;backface-visibility:hidden}
+@keyframes page-shutter-close{to{opacity:.72;transform:perspective(1400px) rotateY(8deg) scale(.985)}}
+@keyframes page-shutter-open{from{opacity:.72;transform:perspective(1400px) rotateY(-12deg) scale(.97)}to{opacity:1;transform:perspective(1400px) rotateY(0) scale(1)}}
+@keyframes page-content-arrive{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes page-nav-arrive{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+.auth-stage,.app-shell:not(.games-app-shell)>.page-main{animation:page-content-arrive .52s cubic-bezier(.2,.8,.2,1) both}
+.app-shell:not(.games-app-shell)>.main-nav{animation:page-nav-arrive .46s cubic-bezier(.2,.8,.2,1) both}
+.app-shell:not(.games-app-shell)>.main-nav{box-shadow:5px 0 0 rgba(255,255,255,.62),12px 0 28px rgba(83,126,174,.1),inset -1px 0 rgba(255,255,255,.82)}
+.app-shell:not(.games-app-shell)>.main-nav button{box-shadow:0 3px 0 rgba(108,158,209,.1),0 6px 12px rgba(81,131,187,.06),inset 0 1px 0 rgba(255,255,255,.74);transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s ease,background .2s ease}
+.app-shell:not(.games-app-shell)>.main-nav button:hover{transform:translateX(3px) translateY(-1px);box-shadow:0 4px 0 rgba(108,158,209,.12),0 9px 16px rgba(81,131,187,.1),inset 0 1px 0 rgba(255,255,255,.86)}
+.app-shell:not(.games-app-shell)>.main-nav button.on{box-shadow:inset 3px 0 var(--pr-strong),0 4px 0 rgba(108,158,209,.1),0 8px 14px rgba(81,131,187,.1)}
+.app-shell:not(.games-app-shell)>.page-main .c,.app-shell:not(.games-app-shell)>.page-main .stat-card,.app-shell:not(.games-app-shell)>.page-main .feature-card,.app-shell:not(.games-app-shell)>.page-main .dashboard-material,.login-single-card,.login-choice-card{transform-style:preserve-3d;transition:transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .24s ease,border-color .24s ease}
+.app-shell:not(.games-app-shell)>.page-main .c:hover,.app-shell:not(.games-app-shell)>.page-main .stat-card:hover,.app-shell:not(.games-app-shell)>.page-main .feature-card:hover,.app-shell:not(.games-app-shell)>.page-main .dashboard-material:hover,.login-single-card:hover{transform:translateY(-3px) perspective(900px) rotateX(.6deg);box-shadow:0 5px 0 rgba(255,255,255,.76) inset,0 5px 0 rgba(108,158,209,.12),0 16px 28px rgba(81,131,187,.14)}
+.login-choice-card{box-shadow:0 5px 0 rgba(49,90,145,.16),0 12px 22px rgba(49,90,145,.13),inset 0 1px 0 rgba(255,255,255,.78)}
+.login-choice-card:hover{box-shadow:0 7px 0 rgba(49,90,145,.18),0 18px 30px rgba(49,90,145,.2),inset 0 1px 0 rgba(255,255,255,.9)}
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none}
+  .auth-stage,.app-shell:not(.games-app-shell)>.page-main,.app-shell:not(.games-app-shell)>.main-nav{animation:none}
+}
